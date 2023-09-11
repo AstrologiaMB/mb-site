@@ -6,9 +6,9 @@ type Props = {
 
 function SplashScreen({ children }: Props) {
   return (
-    <div className="bg-mb-gray flex h-screen flex-col items-center justify-center text-white">
+    <main className="bg-mb-gray flex h-screen flex-col items-center justify-center text-white">
       {children}
-    </div>
+    </main>
   );
 }
 

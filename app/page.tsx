@@ -1,9 +1,15 @@
 import Image from "next/image";
+import SplashScreen from "./components/organisms/splash-screen";
 
 export default function Home() {
   return (
-    <main className=" flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Home</h1>
-    </main>
+    <SplashScreen>
+      <p className="mb-16">
+        POR ACADEMIA DE{" "}
+        <a className="text-mb-green underline" href="#">
+          ASTROLOGÍA AVANZADA MB
+        </a>
+      </p>
+    </SplashScreen>
   );
 }
