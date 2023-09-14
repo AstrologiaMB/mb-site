@@ -5,9 +5,8 @@ export default function Home() {
   return (
     <SplashScreen>
       <p className="mb-16">
-        POR ACADEMIA DE{" "}
-        <a className="text-mb-green underline" href="#">
-          ASTROLOGÍA AVANZADA MB
+        <a className="text-mb-green underline" href="/games/astro-quiz">
+          GAME
         </a>
       </p>
     </SplashScreen>
