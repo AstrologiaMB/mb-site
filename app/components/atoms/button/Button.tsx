@@ -1,14 +1,37 @@
-import { ReactNode } from "react";
+import { cls } from "@/app/utils/arrays";
+import { ButtonHTMLAttributes, ReactNode, forwardRef } from "react";
 
-type Props = {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
+  onClick?: () => void;
+  variant?: "primary" | "success" | "fail";
+}
+
+const classes = {
+  base: "rounded-lg border-2 px-5 py-4 text-lg font-semibold transition-colors disabled:pointer-events-none disabled:border-gray-100",
+  variant: {
+    primary:
+      "border-mb-lila bg-white hover:bg-mb-lila hover:text-white disabled:border-gray-100",
+    success: "border-green-500 bg-white disabled:border-green-500",
+    fail: "border-red-500 bg-white text-red-500 disabled:border-red-500",
+  },
 };
 
-function Button({ children }: Props) {
+function Button({
+  children,
+  onClick,
+  variant = "primary",
+  className,
+  ...props
+}: Props) {
   return (
     <button
-      className="bg-mb-pink w-60 rounded-lg px-7 py-4 text-lg font-semibold transition-colors hover:bg-white hover:text-black"
+      onClick={onClick}
+      className={cls(
+        `${classes.base} ${classes.variant[variant]} ${className}`,
+      )}
       type="button"
+      {...props}
     >
       {children}
     </button>

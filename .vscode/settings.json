@@ -1,6 +1,14 @@
 {
-    "eslint.workingDirectories": [
-        {"directory": "./"}
-    ],
-    "prettier.configPath": ".prettierrc.json"
+  "eslint.workingDirectories": [{ "directory": "./" }],
+  "prettier.configPath": ".prettierrc.json",
+  "tailwindCSS.includeLanguages": {
+    "html": "html",
+    "javascript": "javascript",
+    "css": "css"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
 }

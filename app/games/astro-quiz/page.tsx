@@ -1,32 +1,30 @@
-import Image from "next/image";
-import Button from "@/app/components/atoms/button";
 import SplashScreen from "@/app/components/organisms/splash-screen";
+import { cookies } from "next/headers";
+import { getSessionData } from "@/app/users/action";
+import FakeQuestions from "./components/fake-questions";
+import AstroQuiz from "./components/astro-quiz";
+import { determineZodiacSign } from "@/app/utils/zodiacSignCalculator";
+import BestScores from "./components/best-scores";
 
-function RapidTest() {
-  return (
-    <SplashScreen>
-      <Image
-        className="mb-16"
-        src="/astroquiz.svg"
-        width={140}
-        height={140}
-        alt="Picture of the logo"
+async function RapidTest() {
+  const sessionId = cookies().get("session")?.value;
+  let sessionData;
+  if (sessionId) {
+    sessionData = await getSessionData(sessionId);
+  }
+
+  return sessionData && sessionId ? (
+    <>
+      <BestScores />
+      <AstroQuiz
+        userName={`${sessionData.name} - ${determineZodiacSign(
+          sessionData.dateOfBirth,
+        )}`}
+        sessionId={sessionId}
       />
-      <Image
-        className="mb-10"
-        src="/AstroQuizIso.svg"
-        width={660}
-        height={130}
-        alt="Astro Quiz Isotype"
-      />
-      <p className="mb-16">
-        POR ACADEMIA DE{" "}
-        <a className="text-mb-green underline" href="#">
-          ASTROLOGÍA AVANZADA MB
-        </a>
-      </p>
-      <Button>Jugar</Button>
-    </SplashScreen>
+    </>
+  ) : (
+    <FakeQuestions />
   );
 }
 

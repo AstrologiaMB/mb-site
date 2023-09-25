@@ -14,7 +14,10 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "mb-gray": "#202020",
+        "mb-light-gray": "#F4F4F4",
+        "mb-dark-gray": "#202020",
+        "mb-dark-teal": "#344054",
+        "mb-lila": "#9C7DDF",
         "mb-green": "#BFFF74",
         "mb-pink": "#FF4A9B",
       },
