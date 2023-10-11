@@ -1,8 +1,25 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Gowun_Batang, DM_Mono } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  weight: ["400", "600"],
+  subsets: ["latin-ext"],
+  display: "swap",
+  variable: "--font-inter",
+});
+const dmMono = DM_Mono({
+  weight: ["400"],
+  subsets: ["latin-ext"],
+  display: "swap",
+  variable: "--font-dm-mono",
+});
+const gowun = Gowun_Batang({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-gowun-batang",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +33,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`bg-mb-light-gray ${inter.className}`}>{children}</body>
+      <body
+        className={`bg-mb-light-gray ${inter.variable} ${gowun.variable} ${dmMono.variable}`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,4 +1,4 @@
-import { addUser } from "@/app/users/action";
+import { addUser, MDB_addUser } from "@/app/users/action";
 
 interface NewUserForm {
   className: string;
@@ -10,7 +10,11 @@ const initialState = {
 
 function NewUserForm({ className }: NewUserForm) {
   return (
-    <form className={`flex flex-col ${className}`} action={addUser} id="form1">
+    <form
+      className={`flex flex-col ${className}`}
+      action={MDB_addUser}
+      id="form1"
+    >
       <label htmlFor="name">Name</label>
       <input type="text" id="name" name="name" placeholder="Nombre" required />
 

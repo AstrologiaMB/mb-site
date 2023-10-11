@@ -4,7 +4,9 @@ import { useEffect, useState, useTransition } from "react";
 import { getQuestionPool, type Quiz } from "@/app/utils/questions-with-answers";
 import QuizPart from "./quiz";
 import Dashboard from "./dashbaord";
-import { updateLeaderboard } from "@/app/users/action";
+import { MDB_UpdateUserGame, updateLeaderboard } from "@/app/users/action";
+import { generatePool } from "@/app/utils/zodiac";
+import { useRouter } from "next/navigation";
 
 type Props = {
   userName: string;
@@ -23,13 +25,15 @@ export default function AstroQuiz({ userName, sessionId }: Props) {
   const [questionStartedAt, setQuestionStartedAt] = useState(new Date());
   const [questionsPool, setQuestionsPool] = useState<Quiz[] | null>(null);
   const [currentQuestion, setCurrentQuestion] = useState<Quiz | null>(null);
+  const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const BASE_POINTS = 0;
+  const BASE_POINTS = 10;
   const EXTRA_POINTS = 6;
 
   const finishGame = () => {
-    startTransition(() => {
-      updateLeaderboard(sessionId, points);
+    startTransition(async () => {
+      await MDB_UpdateUserGame(sessionId, points);
+      router.push("/games/astro-quiz/leaderboard");
     });
   };
 
@@ -39,7 +43,6 @@ export default function AstroQuiz({ userName, sessionId }: Props) {
    */
   const updatePool = () => {
     setQuestionStartedAt(new Date());
-    console.log(questionsPool);
     if (questionsPool && questionsPool.length > 0) {
       setCurrentQuestion(() => questionsPool[0]);
     } else {
@@ -79,19 +82,18 @@ export default function AstroQuiz({ userName, sessionId }: Props) {
 
   useEffect(() => {
     setQuestionsPool(() => {
-      const questions = getQuestionPool().slice(0, 5);
-      console.log(questions.length);
+      let questions = generatePool().slice(0, 3);
       setCurrentQuestion(questions[0]);
 
-      return questions.slice(0, 5).splice(1);
+      return questions.splice(1);
     });
   }, []);
 
   return (
     <div className="flex w-full grow flex-col items-center justify-between">
-      <header className="mt-16 grid w-full grid-cols-3">
-        <span className="text-left">{userName}</span>
-        <h1 className="text-center">Astro Quiz</h1>
+      <header className="mt-16 grid w-full grid-cols-2">
+        <span className="text-left font-mono text-2xl">{userName}</span>
+        {/* <h1 className="text-center">Astro Quiz</h1> */}
         <div className="text-right">
           <Dashboard>
             <span>Puntos: </span>
@@ -99,8 +101,7 @@ export default function AstroQuiz({ userName, sessionId }: Props) {
           </Dashboard>
         </div>
       </header>
-
-      {currentQuestion ? (
+      {currentQuestion && (
         <QuizPart
           key={currentQuestion.id}
           onFail={onQuizfail}
@@ -110,8 +111,6 @@ export default function AstroQuiz({ userName, sessionId }: Props) {
           options={currentQuestion.options}
           correctAnswer={currentQuestion.correctAnswer}
         />
-      ) : (
-        <p>TUS PUNTOS: {points}</p>
       )}
       <div></div>
     </div>

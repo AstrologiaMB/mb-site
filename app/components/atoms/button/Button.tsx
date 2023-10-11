@@ -8,7 +8,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const classes = {
-  base: "rounded-lg border-2 px-5 py-4 text-lg font-semibold transition-colors disabled:pointer-events-none disabled:border-gray-100",
+  base: "font-sans font-semibold rounded-lg border-2 px-5 py-4 text-lg font-semibold transition-colors disabled:pointer-events-none disabled:border-gray-100",
   variant: {
     primary:
       "border-mb-lila bg-white hover:bg-mb-lila hover:text-white disabled:border-gray-100",

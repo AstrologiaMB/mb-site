@@ -2,13 +2,21 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { hash } from "bcrypt";
-import { type User } from "@/types/users";
+import { type User as UserType } from "@/types/users";
 import { kv } from "@vercel/kv";
 import UID from "uid-safe";
+import connectDB from "@/lib/mongodb";
+import User, { IUser } from "@/lib/models/user";
+import user from "@/lib/models/user";
 
 type Leaderboard = {
   name: string;
   scores?: [{ game: string; points: number }];
+};
+
+type GameLeaderboard = {
+  userName: string;
+  points: number;
 };
 
 const SALT_ROUNDS = 10;
@@ -17,9 +25,9 @@ const UID_LENGTH = 18;
 const DB_KEY_NAME = "users";
 
 export async function addUser(formData: FormData) {
-  const users: User[] | null = await kv.get(DB_KEY_NAME);
-  const newUser: User = Object.fromEntries(
-    formData as Iterable<[User, FormDataEntryValue]>,
+  const users: UserType[] | null = await kv.get(DB_KEY_NAME);
+  const newUser: UserType = Object.fromEntries(
+    formData as Iterable<[UserType, FormDataEntryValue]>,
   );
 
   const userFound = users?.filter((item) => item.email === newUser.email);
@@ -30,7 +38,7 @@ export async function addUser(formData: FormData) {
     }
     newUser.password = await hash(newUser.password, SALT_ROUNDS);
     newUser.sessionId = await UID(UID_LENGTH);
-    console.log(newUser);
+
     const res = await kv.set(
       DB_KEY_NAME,
       users ? [...users, newUser] : [newUser],
@@ -52,7 +60,7 @@ export async function getUsers() {
 
 export async function getSessionData(sesssionId: string) {
   try {
-    const users: User[] | null = await kv.get(DB_KEY_NAME);
+    const users: UserType[] | null = await kv.get(DB_KEY_NAME);
 
     if (!users) return users;
 
@@ -79,9 +87,8 @@ export async function getSessionData(sesssionId: string) {
  * @returns
  */
 export async function updateLeaderboard(sesssionId: string, points: number) {
-  console.log("wtf");
   try {
-    const users: User[] | null = await kv.get(DB_KEY_NAME);
+    const users: UserType[] | null = await kv.get(DB_KEY_NAME);
     const sessionData = getSessionData(sesssionId);
 
     if (!users) return users;
@@ -124,16 +131,48 @@ export async function updateLeaderboard(sesssionId: string, points: number) {
   }
 }
 
-export async function getLeaderBoard() {
+export async function MDB_UpdateUserGame(sessionId: string, points: number) {
+  console.log(sessionId, points);
   try {
-    const users: User[] | null = await kv.get(DB_KEY_NAME);
+    const filter = { sessionId };
+    const user = await User.findOne(filter);
+
+    if (!user) {
+      return;
+    }
+
+    const existingGame = user.scores?.find(
+      (score: any) => score.game === "AstroQuiz",
+    );
+
+    if (!existingGame || points > existingGame.points) {
+      user.scores = user.scores.filter(
+        (score: any) => score.game !== "AstroQuiz",
+      );
+      user.scores.push({ game: "AstroQuiz", points });
+      const updatedUser = await user.save();
+      revalidatePath("/games/astro-quiz");
+    }
+  } catch (error) {
+    console.log(error);
+    return { message: (error as Error).message };
+  }
+}
+
+export async function getLeaderBoard(game: string) {
+  try {
+    const users: UserType[] | null = await kv.get(DB_KEY_NAME);
 
     const leaderBoard = users?.reduce(
-      (arr: Leaderboard[], currentValue: User) => {
-        if (currentValue.scores) {
+      (arr: GameLeaderboard[], currentValue: UserType) => {
+        const userPoints = currentValue.scores?.find(
+          (score) => score.game === game,
+        )?.points;
+
+        if (userPoints) {
           arr.push({
-            name: currentValue.name,
-            scores: currentValue.scores,
+            userName: currentValue.name,
+            points: userPoints,
           });
         }
         return arr;
@@ -141,6 +180,86 @@ export async function getLeaderBoard() {
       [],
     );
 
-    return leaderBoard;
+    return leaderBoard?.sort((a, b) => {
+      if (a.points > b.points) return -1;
+      if (a.points < b.points) return 1;
+      return 0;
+    });
   } catch (error) {}
+}
+
+export async function MDB_GetLeaderboard() {
+  connectDB();
+  console.log("called");
+  try {
+    const gameLeaderBoard = await User.aggregate([
+      {
+        $unwind: "$scores",
+      },
+      {
+        $match: {
+          "scores.game": "AstroQuiz",
+        },
+      },
+      {
+        $project: {
+          _id: 0, // Exclude the _id field
+          name: 1, // Include the name field
+          "scores.game": 1, // Include the 'scores.game' field
+          "scores.points": 1, // Include the 'scores.points' field
+        },
+      },
+    ]);
+
+    return gameLeaderBoard;
+  } catch (error) {
+    return { message: (error as Error).message };
+  }
+}
+
+export async function MDB_GetSessionData(sessionId: string) {
+  connectDB();
+
+  try {
+    const userFound = await User.findOne({ sessionId: sessionId })
+      .select("email name dateOfBirth")
+      .exec();
+
+    if (!userFound || userFound.length === 0) {
+      throw new Error("Session not found.");
+    }
+
+    return userFound;
+  } catch (error) {
+    return { message: (error as Error).message };
+  }
+}
+
+export async function MDB_addUser(formData: FormData) {
+  try {
+    const userData: UserType = Object.fromEntries(
+      formData as Iterable<[UserType, FormDataEntryValue]>,
+    );
+
+    const userFound = await User.find({ email: userData.email }).select(
+      "email",
+    );
+
+    if (userFound.length > 0) {
+      throw new Error("Email already in use.");
+    }
+
+    userData.password = await hash(userData.password, SALT_ROUNDS);
+    userData.sessionId = await UID(UID_LENGTH);
+    const newUser: IUser = new User(userData);
+    const savedUser = await newUser.save();
+    const oneDay = 24 * 60 * 60 * 1000;
+    cookies().set("session", newUser.sessionId as string, {
+      expires: Date.now() + 30 * oneDay,
+    });
+    revalidatePath("/");
+    return { message: "OK" };
+  } catch (error) {
+    return { message: (error as Error).message };
+  }
 }

@@ -1,27 +1,26 @@
 "use server";
 
-import { getLeaderBoard } from "@/app/users/action";
-import { HTMLAttributes, ReactNode } from "react";
+import { MDB_GetLeaderboard, getLeaderBoard } from "@/app/users/action";
+import { HTMLAttributes } from "react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 async function BestScores({ className, ...props }: Props) {
-  const leaderboard = await getLeaderBoard();
+  const leaderboard = (await MDB_GetLeaderboard()) as {
+    name: string;
+    scores: { game: string; points: number };
+  }[];
+  console.log(leaderboard);
   return (
-    <div className={`text-left ${className}`} {...props}>
-      <h2 className="font-bold">Mejores puntajes</h2>
+    <div className={`text-left font-mono ${className}`} {...props}>
+      <h2 className="mb-6 font-bold">Mejores puntajes</h2>
       {leaderboard &&
         leaderboard.map((leader, index) => {
           if (leader.scores) {
             return (
               <div key={index} className="flex justify-between">
                 <p>{leader.name}</p>
-                <span>
-                  {
-                    leader.scores!.find((score) => score.game === "AstroQuiz")
-                      ?.points
-                  }
-                </span>
+                <span>{leader.scores.points.toString()}</span>
               </div>
             );
           }

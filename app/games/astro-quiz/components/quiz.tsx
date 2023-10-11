@@ -67,7 +67,7 @@ export default function Quiz({
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="mb-14 text-center">{question}</h1>
+      <h1 className="mb-14 text-center font-serif text-4xl">{question}</h1>
       <div className="flex w-[300px] flex-col items-center gap-4">
         {options.map((option, index) => (
           <Button
@@ -84,7 +84,7 @@ export default function Quiz({
         ))}
         <a
           href="#"
-          className={`${
+          className={`font-mono ${
             dirty
               ? "opacity-1 pointer-events-auto"
               : "pointer-events-none opacity-0"

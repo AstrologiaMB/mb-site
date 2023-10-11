@@ -10,12 +10,12 @@ export type Quiz = {
 export const Z_QUESTIONS_POLARITY = [
   {
     question: "¿Cuál es el signo zodiacal con polaridad masculina?",
-    options: ["Aries", "Cáncer", "Libra", "Escorpio"],
+    options: ["Tauro", "Cáncer", "Libra", "Virgo"],
     correctAnswer: "Libra",
   },
   {
     question: "¿Cuál es el signo zodiacal con polaridad femenina?",
-    options: ["Géminis", "Tauro", "Sagitario", "Leo"],
+    options: ["Géminis", "Tauro", "Géminis", "Leo"],
     correctAnswer: "Tauro",
   },
   {
@@ -36,7 +36,7 @@ export const Z_QUESTIONS_POLARITY = [
   {
     question: "¿Cuál es el signo zodiacal con polaridad masculina?",
     options: ["Piscis", "Virgo", "Acuario", "Escorpio"],
-    correctAnswer: "Escorpio",
+    correctAnswer: "Acuario",
   },
   {
     question: "¿Cuál es el signo zodiacal con polaridad femenina?",

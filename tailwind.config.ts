@@ -21,6 +21,11 @@ const config: Config = {
         "mb-green": "#BFFF74",
         "mb-pink": "#FF4A9B",
       },
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        mono: ["var(--font-dm-mono)"],
+        serif: ["var(--font-gowun-batang)"],
+      },
     },
   },
   plugins: [],

@@ -15,11 +15,9 @@ export const config = {
 
 export default async function middleware(request: Request) {
   // You could alternatively limit based on user ID or similar
-  console.log("asd");
   const ip = ipAddress(request) || "127.0.0.1";
   const { success, pending, limit, reset, remaining } =
     await ratelimit.limit(ip);
-  console.log(success);
 
   return success
     ? next()

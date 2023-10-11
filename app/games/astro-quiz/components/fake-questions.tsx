@@ -6,7 +6,7 @@ import NewUserForm from "./new-user-form";
 import LoginForm from "./login-form";
 
 export default function FakeQuestions() {
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(true);
   const [showRegistration, setShowRegistration] = useState(true);
 
   const clickHandler = () => {
@@ -14,6 +14,7 @@ export default function FakeQuestions() {
   };
   return (
     <div>
+      {/*
       <h1 className="mb-14">Selecciona el signo que no es de agua</h1>
       <div className="flex min-w-[300px] flex-col gap-4">
         <Button
@@ -28,6 +29,7 @@ export default function FakeQuestions() {
         <Button onClick={clickHandler}>Escorpio</Button>
         <Button onClick={clickHandler}>Cáncer</Button>
       </div>
+      */}
       <Modal isOpen={modal}>
         <div className="flex flex-col items-center">
           <img
