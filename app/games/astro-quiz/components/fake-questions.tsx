@@ -40,7 +40,7 @@ export default function FakeQuestions() {
           {showRegistration ? (
             <>
               <NewUserForm className="asd" />
-              <div>
+              <div className="pointer-events-none opacity-0">
                 <p>Tienes un usuario?</p>
                 <a href="#" onClick={() => setShowRegistration(false)}>
                   Ingresa
@@ -48,7 +48,7 @@ export default function FakeQuestions() {
               </div>
             </>
           ) : (
-            <div>
+            <div className="pointer-events-none opacity-0">
               <LoginForm />
               <a href="#" onClick={() => setShowRegistration(true)}>
                 Registrate
