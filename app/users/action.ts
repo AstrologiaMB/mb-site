@@ -7,7 +7,7 @@ import { kv } from "@vercel/kv";
 import UID from "uid-safe";
 import connectDB from "@/lib/mongodb";
 import User, { IUser } from "@/lib/models/user";
-import user from "@/lib/models/user";
+import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 type Leaderboard = {
   name: string;
@@ -189,7 +189,7 @@ export async function getLeaderBoard(game: string) {
 }
 
 export async function MDB_GetLeaderboard() {
-  connectDB();
+  await connectDB();
   console.log("called");
   try {
     const gameLeaderBoard = await User.aggregate([
@@ -218,9 +218,10 @@ export async function MDB_GetLeaderboard() {
 }
 
 export async function MDB_GetSessionData(sessionId: string) {
-  connectDB();
-
   try {
+    console.log("connecting DB");
+    await connectDB();
+    console.log("connected DB");
     const userFound = await User.findOne({ sessionId: sessionId })
       .select("email name dateOfBirth")
       .exec();
@@ -229,6 +230,7 @@ export async function MDB_GetSessionData(sessionId: string) {
       throw new Error("Session not found.");
     }
 
+    console.log("user found");
     return userFound;
   } catch (error) {
     return { message: (error as Error).message };

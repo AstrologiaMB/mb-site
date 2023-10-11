@@ -12,8 +12,8 @@ async function BestScores({ className, ...props }: Props) {
   }[];
   console.log(leaderboard);
   return (
-    <div className={`text-left font-mono ${className}`} {...props}>
-      <h2 className="mb-6 font-bold">Mejores puntajes</h2>
+    <div className={`mb-8 text-left font-mono ${className}`} {...props}>
+      <h2 className="mb-6 font-serif text-3xl">Mejores puntajes</h2>
       {leaderboard &&
         leaderboard.map((leader, index) => {
           if (leader.scores) {
