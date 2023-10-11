@@ -209,6 +209,11 @@ export async function MDB_GetLeaderboard() {
           "scores.points": 1, // Include the 'scores.points' field
         },
       },
+      {
+        $sort: {
+          "scores.points": -1, // Sort by 'scores.points' in ascending order
+        },
+      },
     ]);
 
     return gameLeaderBoard;
