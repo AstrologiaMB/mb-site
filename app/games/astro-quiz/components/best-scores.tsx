@@ -10,7 +10,6 @@ async function BestScores({ className, ...props }: Props) {
     name: string;
     scores: { game: string; points: number };
   }[];
-  console.log(leaderboard);
   return (
     <div className={`mb-8 text-left font-mono ${className}`} {...props}>
       <h2 className="mb-6 font-serif text-3xl">Mejores puntajes</h2>

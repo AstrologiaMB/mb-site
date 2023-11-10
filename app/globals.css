@@ -15,3 +15,22 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+@keyframes grow-and-shrink {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bumping {
+  animation: grow-and-shrink 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  display: inline-block;
+}

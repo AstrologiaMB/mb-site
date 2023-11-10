@@ -4,7 +4,7 @@ export interface IUser extends Document {
   dateOfBirth: string;
   email: string;
   name: string;
-  password: string;
+  password?: string;
   scores?: [{ game: string; points: number }];
   sessionId?: string;
   verified: boolean;
@@ -40,7 +40,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
       trim: true,
     },
     scores: {

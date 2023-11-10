@@ -1,36 +1,23 @@
-import SplashScreen from "@/app/components/organisms/splash-screen";
-import { cookies } from "next/headers";
-import { getSessionData, MDB_GetSessionData } from "@/app/users/action";
-import FakeQuestions from "./components/fake-questions";
 import AstroQuiz from "./components/astro-quiz";
 import { determineZodiacSign } from "@/app/utils/zodiacSignCalculator";
-import BestScores from "./components/best-scores";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../../api/auth/[...nextauth]/route";
+import SplashScreen from "@/app/components/organisms/splash-screen";
 
-async function RapidTest() {
-  const sessionId = cookies().get("session")?.value;
-  let sessionData;
-  if (sessionId) {
-    sessionData = await MDB_GetSessionData(sessionId);
-  }
+async function AstroQuizGame() {
+  const session = await getServerSession(authOptions);
 
-  try {
-    if (sessionData && sessionId) {
-      return (
-        <>
-          <AstroQuiz
-            userName={`${sessionData.name} - ${determineZodiacSign(
-              sessionData.dateOfBirth,
-            )}`}
-            sessionId={sessionId}
-          />
-        </>
-      );
-    } else {
-      return <FakeQuestions />;
-    }
-  } catch (error) {
-    return <FakeQuestions />;
+  if (session) {
+    return (
+      <SplashScreen>
+        <AstroQuiz
+          userName={`${session?.user?.name} ${determineZodiacSign(
+            session?.user?.dateOfBirth,
+          )}`}
+        />
+      </SplashScreen>
+    );
   }
 }
 
-export default RapidTest;
+export default AstroQuizGame;

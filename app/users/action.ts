@@ -5,9 +5,8 @@ import { hash } from "bcrypt";
 import { type User as UserType } from "@/types/users";
 import { kv } from "@vercel/kv";
 import UID from "uid-safe";
-import connectDB from "@/lib/mongodb";
+import connectDB from "@/lib/mongooseConnector";
 import User, { IUser } from "@/lib/models/user";
-import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 type Leaderboard = {
   name: string;
@@ -131,10 +130,9 @@ export async function updateLeaderboard(sesssionId: string, points: number) {
   }
 }
 
-export async function MDB_UpdateUserGame(sessionId: string, points: number) {
-  console.log(sessionId, points);
+export async function MDB_UpdateUserGame(email: string, points: number) {
   try {
-    const filter = { sessionId };
+    const filter = { email };
     const user = await User.findOne(filter);
 
     if (!user) {
@@ -154,7 +152,6 @@ export async function MDB_UpdateUserGame(sessionId: string, points: number) {
       revalidatePath("/games/astro-quiz");
     }
   } catch (error) {
-    console.log(error);
     return { message: (error as Error).message };
   }
 }
@@ -190,7 +187,7 @@ export async function getLeaderBoard(game: string) {
 
 export async function MDB_GetLeaderboard() {
   await connectDB();
-  console.log("called");
+
   try {
     const gameLeaderBoard = await User.aggregate([
       {
@@ -224,9 +221,7 @@ export async function MDB_GetLeaderboard() {
 
 export async function MDB_GetSessionData(sessionId: string) {
   try {
-    console.log("connecting DB");
     await connectDB();
-    console.log("connected DB");
     const userFound = await User.findOne({ sessionId: sessionId })
       .select("email name dateOfBirth")
       .exec();
@@ -235,7 +230,6 @@ export async function MDB_GetSessionData(sessionId: string) {
       throw new Error("Session not found.");
     }
 
-    console.log("user found");
     return userFound;
   } catch (error) {
     return { message: (error as Error).message };
@@ -244,6 +238,7 @@ export async function MDB_GetSessionData(sessionId: string) {
 
 export async function MDB_addUser(formData: FormData) {
   try {
+    await connectDB();
     const userData: UserType = Object.fromEntries(
       formData as Iterable<[UserType, FormDataEntryValue]>,
     );
@@ -256,7 +251,7 @@ export async function MDB_addUser(formData: FormData) {
       throw new Error("Email already in use.");
     }
 
-    userData.password = await hash(userData.password, SALT_ROUNDS);
+    //userData.password = await hash(userData.password, SALT_ROUNDS);
     userData.sessionId = await UID(UID_LENGTH);
     const newUser: IUser = new User(userData);
     const savedUser = await newUser.save();

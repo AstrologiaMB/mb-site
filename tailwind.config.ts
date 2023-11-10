@@ -16,6 +16,7 @@ const config: Config = {
       colors: {
         "mb-light-gray": "#F4F4F4",
         "mb-dark-gray": "#202020",
+        "mb-dust-gray": "#979797",
         "mb-dark-teal": "#344054",
         "mb-lila": "#9C7DDF",
         "mb-green": "#BFFF74",

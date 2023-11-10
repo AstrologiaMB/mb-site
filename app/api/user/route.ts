@@ -1,7 +1,35 @@
-import { kv } from "@vercel/kv";
-import { NextResponse } from "next/server";
+import connectDB from "@/lib/mongooseConnector";
+import { NextResponse, NextRequest } from "next/server";
+import User, { IUser } from "@/lib/models/user";
 
-export async function GET() {
-  const user = await kv.get("users");
-  return NextResponse.json(user);
+type BasicUser = {
+  email: string;
+  name: string;
+  dateOfBirth: string;
+};
+
+export async function POST(request: NextRequest) {
+  const { email, name, dateOfBirth }: BasicUser = await request.json();
+
+  try {
+    await connectDB();
+
+    console.log("CONNECTED");
+    const userFound = await User.findOne({ email }).select("email");
+
+    if (userFound) return userFound;
+
+    const newUser: IUser = new User({
+      dateOfBirth,
+      name,
+      email,
+    });
+
+    const savedUser = await newUser.save();
+
+    return NextResponse.json(
+      { message: "Operation successful" },
+      { status: 200 },
+    );
+  } catch (error) {}
 }

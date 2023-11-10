@@ -9,7 +9,7 @@ type Props = {
   correctAnswer: string;
   onFail: () => void;
   onSuccess: () => void;
-  onNext: () => void;
+  onNext?: () => void;
 };
 
 export default function Quiz({
@@ -36,7 +36,7 @@ export default function Quiz({
 
   const selectButtonVariant = (
     iterationOption: string,
-  ): "success" | "fail" | "primary" => {
+  ): "success" | "fail" | "primary" | "hint" => {
     //button touched
     if (dirty) {
       //clicked button
@@ -48,7 +48,7 @@ export default function Quiz({
         }
       } else {
         if (iterationOption === correctAnswer) {
-          return "success";
+          return "hint";
         }
 
         if (iterationOption === selectedOption) {
@@ -62,12 +62,12 @@ export default function Quiz({
 
   const handleOnNext = (event: MouseEvent) => {
     event.preventDefault;
-    onNext();
+    if (onNext) onNext();
   };
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="mb-14 text-center font-serif text-4xl">{question}</h1>
+      <h1 className="mb-[60px] text-center font-serif text-4xl">{question}</h1>
       <div className="flex w-[300px] flex-col items-center gap-4">
         {options.map((option, index) => (
           <Button
@@ -79,20 +79,28 @@ export default function Quiz({
             variant={selectButtonVariant(option)}
             disabled={dirty}
           >
+            {selectButtonVariant(option) === "fail" && (
+              <span className="bumping mr-2">😵</span>
+            )}
+            {selectButtonVariant(option) === "success" && (
+              <span className="bumping mr-2">🤩</span>
+            )}
             {option}
           </Button>
         ))}
-        <a
-          href="#"
-          className={`font-mono ${
-            dirty
-              ? "opacity-1 pointer-events-auto"
-              : "pointer-events-none opacity-0"
-          } mt-6`}
-          onClick={handleOnNext}
-        >
-          Siguiente &gt;
-        </a>
+        {onNext && (
+          <a
+            href="#"
+            className={`font-mono ${
+              dirty
+                ? "opacity-1 pointer-events-auto"
+                : "pointer-events-none opacity-0"
+            } mt-6`}
+            onClick={handleOnNext}
+          >
+            Siguiente &gt;
+          </a>
+        )}
       </div>
     </div>
   );

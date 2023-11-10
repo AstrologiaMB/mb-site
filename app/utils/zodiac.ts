@@ -180,7 +180,7 @@ export const questionElement = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿Cual es el signo con el Elemento de ${randomSign.element}?`,
+    question: `¿Cuál de estos signos no es de ${randomSign.element}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
@@ -193,7 +193,7 @@ export const questionModality = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿Cual es el signo con la Modalidad ${randomSign.modality}?`,
+    question: `¿Cuál de estos signos tiene modalidad ${randomSign.modality}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
@@ -206,7 +206,7 @@ const questionPolarity = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿Cual es el signo con la Polaridad ${randomSign.polarity}?`,
+    question: `¿Cuál de estos signos tiene la polaridad ${randomSign.polarity}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
@@ -219,7 +219,7 @@ const questionAnimal = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿A que signo se lo identifica con el animal ${randomSign.animal}?`,
+    question: `¿Qué signo zodiacalestá asociado a un/a ${randomSign.animal}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
@@ -245,7 +245,7 @@ const questionRegent = (): Quiz => {
   ).map((sign) => sign.regent);
 
   return {
-    question: `¿Cual es el Regente de ${randomSign.name}?`,
+    question: `¿Qué planeta o luminaria rige a ${randomSign.name}?`,
     correctAnswer: randomSign.regent,
     options: shuffleArray([randomSign.regent, ...options]),
   };
@@ -255,12 +255,12 @@ const questionBody = (): Quiz => {
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
   const options = pickRandomItems(
     zodiacSigns.filter((sign) => sign.body !== randomSign.body),
-  ).map((sign) => sign.name);
+  ).map((sign) => sign.body);
 
   return {
-    question: `¿Que signo rige la/s parte/s del cuerpo: ${randomSign.body}?`,
-    correctAnswer: randomSign.name,
-    options: shuffleArray([randomSign.name, ...options]),
+    question: `¿Qué parte del cuerpo rige el signo de ${randomSign.name}?`,
+    correctAnswer: randomSign.body,
+    options: shuffleArray([randomSign.body, ...options]),
   };
 };
 const questionGlyph = (): Quiz => {
@@ -271,7 +271,7 @@ const questionGlyph = (): Quiz => {
   ).map((sign) => sign.glyph);
 
   return {
-    question: `¿Cuál es el glifo de ${randomSign.name}?`,
+    question: `¿Cuál de estos glifos representa a ${randomSign.name}?`,
     correctAnswer: randomSign.glyph,
     options: shuffleArray([randomSign.glyph, ...options]),
   };
@@ -288,7 +288,7 @@ const questionTemperament = (): Quiz => {
   return {
     question: `¿A que signo le corresponde el temperamento '${randomSign.temperament}'?`,
     correctAnswer: randomSign.name,
-    options: shuffleArray([randomSign.temperament, ...options]),
+    options: shuffleArray([randomSign.name, ...options]),
   };
 };
 const questionNumber = (): Quiz => {
@@ -312,13 +312,14 @@ const questionStartDate = (): Quiz => {
   ).map((sign) => sign.date);
 
   return {
-    question: `¿El signo ${randomSign.name} comienza el dia:?`,
+    question: `¿Qué día comienza el signo de ${randomSign.name}?`,
     correctAnswer: randomSign.date,
     options: shuffleArray([randomSign.date, ...options]),
   };
 };
 
 const combinedQuestions = [
+  questionElement,
   questionModality,
   questionPolarity,
   questionAnimal,
@@ -332,9 +333,18 @@ const combinedQuestions = [
 ];
 
 export function generatePool() {
-  const pool = combinedQuestions.map((question) => {
-    return [question(), question()];
-  });
+  const pool = [
+    ...shuffleArray(
+      combinedQuestions.map((question) => {
+        return question();
+      }),
+    ),
+    ...shuffleArray(
+      combinedQuestions.map((question) => {
+        return question();
+      }),
+    ),
+  ];
 
-  return pool.flat().map((item, index) => ({ ...item, id: index.toString() }));
+  return pool.map((item, index) => ({ ...item, id: index.toString() }));
 }

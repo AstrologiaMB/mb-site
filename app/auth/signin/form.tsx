@@ -34,16 +34,6 @@ function NewUserForm({ className }: NewUserForm) {
         placeholder="Email"
         required
       />
-
-      <label htmlFor="password">Contraseña</label>
-      <input
-        className="mb-4 mt-1 border border-gray-300 p-1 text-sm"
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Contraseña"
-        required
-      />
       <label htmlFor="dateOfBirth">Fecha de nacimiento:</label>
       <input
         className="mb-4 mt-1 border border-gray-300 p-1 text-sm"
