@@ -128,11 +128,45 @@ export default function AstroQuiz({ userName }: Props) {
 
   useEffect(() => {
     setGame();
+
+    (function (d) {
+      var config = {
+          kitId: "zub8uxw",
+          scriptTimeout: 3000,
+          async: true,
+        },
+        h = d.documentElement,
+        t = setTimeout(function () {
+          h.className =
+            h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
+        }, config.scriptTimeout),
+        tk = d.createElement("script"),
+        f = false,
+        s = d.getElementsByTagName("script")[0],
+        a;
+      h.className += " wf-loading";
+      tk.src = "https://use.typekit.net/" + config.kitId + ".js";
+      tk.async = true;
+      // @ts-ignore
+      tk.onload = tk.onreadystatechange = function () {
+        // @ts-ignore
+        a = this.readyState;
+        if (f || (a && a != "complete" && a != "loaded")) return;
+        f = true;
+        clearTimeout(t);
+        try {
+          // @ts-ignore
+          Typekit.load(config);
+        } catch (e) {}
+      };
+      // @ts-ignore
+      s.parentNode.insertBefore(tk, s);
+    })(document);
   }, []);
 
   return (
     <div className="flex w-full grow flex-col items-center justify-between">
-      <header className="mt-16 grid w-full grid-cols-2">
+      <header className="mt-16 flex w-full flex-col items-center md:flex-row md:justify-between">
         {/*
         <button
           onClick={() =>

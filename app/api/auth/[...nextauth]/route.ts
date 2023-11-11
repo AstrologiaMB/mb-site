@@ -110,13 +110,13 @@ function html(params: { url: string; host: string }) {
     <tr>
       <td align="center"
         style="font-family: Inter, Arial, sans-serif; padding: 10px 0px; font-size: 16px; color: ${color.text};">
-        <img src="https://mb-site.vercel.app/email-astroquiz.svg" width="200" height="40" />
+        <img src="https://mb-site.vercel.app/email-astroquiz.png" width="200" height="40" />
       </td>
     </tr>
     <tr>
       <td align="center"
         style="font-family: Inter, Arial, sans-serif; padding: 10px 0px; font-size: 16px; color: ${color.text};">
-        <img src="https://mb-site.vercel.app/saturn.svg" width="113" height="85" />
+        <img src="https://mb-site.vercel.app/saturn.png" width="113" height="85" />
       </td>
     </tr>
     <tr>
@@ -145,7 +145,7 @@ function html(params: { url: string; host: string }) {
     <tr>
       <td align="center"
         style="font-family: Inter, Arial, sans-serif; padding: 10px 0px; font-size: 16px; color: ${color.text};">
-        <img src="https://mb-site.vercel.app/AQ-black.svg" width="34" height="34" />
+        <img src="https://mb-site.vercel.app/AQ-back.svg" width="34" height="34" />
       </td>
     </tr>
     <tr>

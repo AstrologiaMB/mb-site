@@ -17,7 +17,7 @@ export default async function Home() {
         height={157}
         alt="Picture of the author"
       />
-      <h1 className="mb-16 font-mono text-[20px] text-white">
+      <h1 className="mb-16 text-center font-mono text-[20px] text-white">
         POR ACADEMIA DE{" "}
         <a
           className="text-mb-green"

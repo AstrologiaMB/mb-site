@@ -10,7 +10,7 @@ type Props = {
 function SplashScreen({ children, className, fullScreen, background }: Props) {
   return (
     <main
-      className={`mx-auto flex h-screen ${
+      className={`mx-auto flex h-screen px-6 ${
         !fullScreen && "max-w-7xl"
       } flex-col items-center justify-center ${
         background && "bg-[url('/BG.png')] bg-cover"

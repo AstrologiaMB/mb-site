@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --font-gowun-batang: "gowun-batang", sans-serif;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -33,4 +34,10 @@
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
   display: inline-block;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
 }

@@ -1,6 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 
 const LABEL_STYLES = "text-mb-dust-gray mb-1 text-sm font-medium";
 const INPUT_STYLES =
@@ -38,6 +38,17 @@ export default function SignIn() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (navigator.userAgent.indexOf("iPhone") > -1) {
+      document
+        ?.querySelector("[name=viewport]")
+        ?.setAttribute(
+          "content",
+          "width=device-width, initial-scale=1, maximum-scale=1",
+        );
+    }
+  }, []);
 
   return (
     <div className="flex max-w-[416px] flex-col items-center">
@@ -81,7 +92,7 @@ export default function SignIn() {
         </label>
         <input
           ref={dateRef}
-          className={INPUT_STYLES}
+          className={`${INPUT_STYLES} uppercase`}
           type="date"
           id="dateOfBirth"
           name="dateOfBirth"
