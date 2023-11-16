@@ -145,7 +145,7 @@ function html(params: { url: string; host: string }) {
     <tr>
       <td align="center"
         style="font-family: Inter, Arial, sans-serif; padding: 10px 0px; font-size: 16px; color: ${color.text};">
-        <img src="https://mb-site.vercel.app/AQ-back.svg" width="34" height="34" />
+        <img src="https://mb-site.vercel.app/email-footer-black.png" width="34" height="34" />
       </td>
     </tr>
     <tr>
