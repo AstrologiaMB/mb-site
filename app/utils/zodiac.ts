@@ -219,7 +219,7 @@ const questionAnimal = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿Qué signo zodiacalestá asociado a un/a ${randomSign.animal}?`,
+    question: `¿Qué signo zodiacal está asociado a un/a ${randomSign.animal}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
@@ -232,7 +232,7 @@ const questionOpposite = (): Quiz => {
   ).map((sign) => sign.opposite);
 
   return {
-    question: `¿Que signo es el opuesto de ${randomSign.name}?`,
+    question: `¿Qué signo es el opuesto de ${randomSign.name}?`,
     correctAnswer: randomSign.opposite,
     options: shuffleArray([randomSign.opposite, ...options]),
   };
@@ -286,7 +286,7 @@ const questionTemperament = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿A que signo le corresponde el temperamento '${randomSign.temperament}'?`,
+    question: `¿A qué signo le corresponde el temperamento '${randomSign.temperament}'?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
@@ -299,7 +299,7 @@ const questionNumber = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿A que signo le corresponde el numero ${randomSign.number}?`,
+    question: `¿A qué signo le corresponde el numero ${randomSign.number}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };

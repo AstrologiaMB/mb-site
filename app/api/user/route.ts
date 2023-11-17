@@ -31,5 +31,7 @@ export async function POST(request: NextRequest) {
       { message: "Operation successful" },
       { status: 200 },
     );
-  } catch (error) {}
+  } catch (error) {
+    console.error("There was an error trying to retrive/save the user", error);
+  }
 }
