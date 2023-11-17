@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  debug: true,
+  debug: false,
   pages: {
     signIn: "/auth/signin",
     verifyRequest: "/auth/verify-request",

@@ -17,15 +17,15 @@ export async function POST(request: NextRequest) {
     console.log("CONNECTED");
     const userFound = await User.findOne({ email }).select("email");
 
-    if (userFound) return userFound;
+    if (!userFound) {
+      const newUser: IUser = new User({
+        dateOfBirth,
+        name,
+        email,
+      });
 
-    const newUser: IUser = new User({
-      dateOfBirth,
-      name,
-      email,
-    });
-
-    const savedUser = await newUser.save();
+      const savedUser = await newUser.save();
+    }
 
     return NextResponse.json(
       { message: "Operation successful" },
