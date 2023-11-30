@@ -185,8 +185,10 @@ export default function AstroQuiz({ userName }: Props) {
         <span className="text-left font-mono text-xl md:text-2xl">
           {userName}
         </span>
-        <div className="text-right font-mono text-xl md:text-2xl">
-          <span>{questionsPool ? `${20 - questionsPool.length}/20` : ""} </span>
+        <div className="flex gap-[6px] text-right font-mono text-xl md:text-2xl">
+          {questionsPool && <span>#️⃣</span>}
+          <span>{questionsPool ? `${20 - questionsPool.length}/20` : ""}</span>
+          <span>|</span>
           <Dashboard key={clockKey}>
             <span>Puntos:{points}</span>
           </Dashboard>
@@ -202,7 +204,7 @@ export default function AstroQuiz({ userName }: Props) {
             options={currentQuestion.options}
             correctAnswer={currentQuestion.correctAnswer}
           />
-          <div className="mt-[72px] flex flex-col items-center font-mono">
+          <div className="mt-[52px] flex flex-col items-center font-mono">
             <a
               href="#"
               className="bold text-md font-medium md:text-[18px]"
