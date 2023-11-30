@@ -66,17 +66,21 @@ async function CustomSendVerificationRequest(params: {
   const { identifier, url, provider, theme } = params;
   const { host } = new URL(url);
 
-  const transport = createTransport(provider.server);
-  const result = await transport.sendMail({
-    to: identifier,
-    from: provider.from,
-    subject: `Ingresar a AstroQuiz`,
-    text: text({ url, host }),
-    html: html({ url, host }),
-  });
-  const failed = result.rejected.concat(result.pending).filter(Boolean);
-  if (failed.length) {
-    throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
+  try {
+    const transport = createTransport(provider.server);
+    const result = await transport.sendMail({
+      to: identifier,
+      from: provider.from,
+      subject: `Ingresar a AstroQuiz`,
+      text: text({ url, host }),
+      html: html({ url, host }),
+    });
+    const failed = result.rejected.concat(result.pending).filter(Boolean);
+    if (failed.length) {
+      throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
+    }
+  } catch (error) {
+    console.error("There was an an error in the email", error);
   }
 }
 
@@ -92,7 +96,6 @@ function html(params: { url: string; host: string }) {
   const { url, host } = params;
 
   const escapedHost = host.replace(/\./g, "&#8203;.");
-
   const brandColor = "#9C7DDF";
   const color = {
     background: "#F4F4F4",
@@ -104,19 +107,19 @@ function html(params: { url: string; host: string }) {
   };
 
   return `
-<body style="background: ${color.background};">
+<body style="background-color: ${color.background};">
   <table width="100%" border="0" cellpadding="0"
     style="max-width: 397px; margin: auto; border-radius: 10px;">
     <tr>
       <td align="center"
         style="font-family: Inter, Arial, sans-serif; padding: 10px 0px; font-size: 16px; color: ${color.text};">
-        <img src="https://mb-site.vercel.app/email-astroquiz.png" width="200" height="40" />
+        <img src="https://mb-site.vercel.app/saturn.png" width="113" height="85" />
       </td>
     </tr>
     <tr>
       <td align="center"
         style="font-family: Inter, Arial, sans-serif; padding: 10px 0px; font-size: 16px; color: ${color.text};">
-        <img src="https://mb-site.vercel.app/saturn.png" width="113" height="85" />
+        <img src="https://mb-site.vercel.app/email-astroquiz.png" width="200" height="27" />
       </td>
     </tr>
     <tr>

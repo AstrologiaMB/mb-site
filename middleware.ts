@@ -16,8 +16,6 @@ export const config = {
 };
 
 async function withRateLimit(request: Request, event: NextFetchEvent) {
-  console.log("RATE");
-  console.log("RATE");
   const ip = ipAddress(request) || "127.0.0.1";
   const { success, pending, limit, reset, remaining } =
     await ratelimit.limit(ip);
@@ -30,13 +28,7 @@ async function withRateLimit(request: Request, event: NextFetchEvent) {
 export default withAuth(withRateLimit, {
   callbacks: {
     authorized: async ({ req, token }) => {
-      console.log("AUTH");
-      console.log("AUTH");
-      console.log("AUTH");
-      console.log("AUTH");
       const pathname = req.nextUrl.pathname;
-      console.log(pathname);
-      console.log(token);
       if (pathname.startsWith("/_next") || pathname === "/favicon.ico")
         return true;
 

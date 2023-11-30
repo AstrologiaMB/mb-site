@@ -7,14 +7,14 @@ type Props = {
 
 export default function Dashboard({ children }: Props) {
   return (
-    <div className="inline-block gap-3 rounded-lg font-mono text-2xl">
+    <div className="inline-block gap-3 rounded-lg">
       <div className="flex">
         <span className="flex gap-3">
           <span>⏱️</span>
           <Clock />
           <span>|</span>
+          {children}
         </span>
-        {children}
       </div>
     </div>
   );

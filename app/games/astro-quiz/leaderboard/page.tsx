@@ -13,49 +13,47 @@ function LeaderBoard() {
   return (
     <div className="flex max-w-[401px] flex-col items-start">
       <h1 className="mb-[40px] font-mono text-[24px]">¡Felicitaciones!</h1>
-      <p>
+      <p className="mb-[50px]">
         Ya sabes un poco mas de astrología. Sigue jugando y aprendiendo con
         nosotros y tus amigos.
       </p>
-      <a
-        className="mt-4 text-mb-green"
-        href="#"
-        onClick={(event) => {
-          event.preventDefault();
-          setmodalOpen(true);
-        }}
-      >
-        Compartir AstroQuiz
-      </a>
-      <Image
-        className="mb-11 mt-16 object-contain"
-        src="/compo.png"
-        width={243}
-        height={187}
-        alt="Picture of a bird and moon"
-      />
-      {/* <BestScores className="mb-4" /> */}
-      <Link href="/" className="flex items-center self-start text-mb-green">
-        <svg
-          className="rotate-180"
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
+      <BestScores />
+      <div className="mt-20 flex w-full items-center justify-between">
+        <Link
+          href="/games/astro-quiz"
+          className="flex items-center self-start font-semibold text-mb-green"
         >
-          <path
-            d="M4.16669 10H15.8334M15.8334 10L10 4.16666M15.8334 10L10 15.8333"
-            stroke="#BFFF74"
-            stroke-width="1.67"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-        <span className="ml-2">Inicio</span>
-      </Link>
+          <svg
+            className="rotate-180"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M4.16669 10H15.8334M15.8334 10L10 4.16666M15.8334 10L10 15.8333"
+              stroke="#BFFF74"
+              stroke-width="1.67"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span className="ml-2">Volver a jugar</span>
+        </Link>
+        <a
+          className="font-semibold text-mb-green"
+          href="#"
+          onClick={(event) => {
+            event.preventDefault();
+            setmodalOpen(true);
+          }}
+        >
+          Compartir AstroQuiz
+        </a>
+      </div>
       <Modal isOpen={modalOpen}>
-        <h2 className="text-center font-mono text-xl">Compartir AstroQuiz</h2>
+        <h2 className="text-center font-sans text-xl">Compartir AstroQuiz</h2>
         <hr className="mb-4 mt-8" />
         <div className="flex justify-center gap-4">
           <a

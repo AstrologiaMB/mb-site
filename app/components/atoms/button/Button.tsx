@@ -12,7 +12,7 @@ const classes = {
   variant: {
     hint: "px-5 py-4 border-green-500 bg-white disabled:border-green-500",
     primary:
-      "px-5 py-4 border-mb-lila bg-white hover:bg-mb-lila hover:text-white disabled:border-gray-100",
+      "px-5 py-4 border-mb-lila bg-white md:hover:bg-mb-lila md:hover:text-white disabled:border-gray-100",
     cta: "bg-mb-pink border-mb-pink text-white px-0 py-0",
     success:
       "px-5 py-4 border-[#27CA40] bg-[#27CA40] disabled:border-[#27CA40]",

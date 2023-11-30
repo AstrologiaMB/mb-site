@@ -2,7 +2,6 @@
 
 import SplashScreen from "@/app/components/organisms/splash-screen";
 import { ReactNode } from "react";
-import { SessionProvider } from "next-auth/react";
 
 type Props = {
   children: ReactNode;

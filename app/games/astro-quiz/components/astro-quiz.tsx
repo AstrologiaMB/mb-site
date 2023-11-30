@@ -66,6 +66,8 @@ export default function AstroQuiz({ userName }: Props) {
 
       return null;
     });
+
+    setClockKey(Math.random());
   };
 
   const onQuizfail = () => {
@@ -107,6 +109,8 @@ export default function AstroQuiz({ userName }: Props) {
 
           return questions.splice(1);
         });
+
+        setClockKey(Math.random());
       }
     }
   };
@@ -165,8 +169,8 @@ export default function AstroQuiz({ userName }: Props) {
   }, []);
 
   return (
-    <div className="flex w-full grow flex-col items-center justify-between">
-      <header className="mt-16 flex w-full flex-col items-center md:flex-row md:justify-between">
+    <div className="flex w-full grow flex-col items-center md:justify-between">
+      <header className="mt-10 flex w-full flex-col items-center md:mt-16 md:flex-row md:justify-between">
         {/*
         <button
           onClick={() =>
@@ -178,10 +182,13 @@ export default function AstroQuiz({ userName }: Props) {
           Logout
         </button>
          */}
-        <span className="text-left font-mono text-2xl">{userName}</span>
-        <div className="text-right">
+        <span className="text-left font-mono text-xl md:text-2xl">
+          {userName}
+        </span>
+        <div className="text-right font-mono text-xl md:text-2xl">
+          <span>{questionsPool ? `${20 - questionsPool.length}/20` : ""} </span>
           <Dashboard key={clockKey}>
-            <span>Puntos: {points}</span>
+            <span>Puntos:{points}</span>
           </Dashboard>
         </div>
       </header>
@@ -198,23 +205,23 @@ export default function AstroQuiz({ userName }: Props) {
           <div className="mt-[72px] flex flex-col items-center font-mono">
             <a
               href="#"
-              className="bold text-[18px] font-medium"
+              className="bold text-md font-medium md:text-[18px]"
               onClick={(event) => {
                 event.preventDefault();
                 skipQuestion();
               }}
             >
-              Saltear pregunta
+              Saltear pregunta ➡️
             </a>
             <a
-              className="mt-4 text-[18px]"
+              className="text-md mt-4 md:text-[18px]"
               href="#"
               onClick={(event) => {
                 event.preventDefault();
                 setGame();
               }}
             >
-              Comenzar nueva partida
+              Comenzar nueva partida 🔄
             </a>
           </div>
         </div>

@@ -15,6 +15,7 @@ const zodiacSigns = [
     temperament: "Caliente y Seco",
     number: 1,
     date: "21 de Marzo",
+    endDate: "20 de Abril",
   },
   {
     name: "Tauro",
@@ -29,6 +30,7 @@ const zodiacSigns = [
     temperament: "Frio y Seco",
     number: 2,
     date: "21 de Abril",
+    endDate: "20 de Mayo",
   },
   {
     name: "Géminis",
@@ -43,6 +45,7 @@ const zodiacSigns = [
     temperament: "Humedo y Caliente",
     number: 3,
     date: "21 de Mayo",
+    endDate: "20 de Junio",
   },
   {
     name: "Cáncer",
@@ -57,6 +60,7 @@ const zodiacSigns = [
     temperament: "Humedo y Frio",
     number: 4,
     date: "21 de Junio",
+    endDate: "20 de Julio",
   },
   {
     name: "Leo",
@@ -66,11 +70,12 @@ const zodiacSigns = [
     animal: "León",
     opposite: "Acuario",
     regent: "Sol",
-    body: "Corazón y espalda alta",
+    body: "Corazón",
     glyph: "♌️",
     temperament: "Seco y Caliente",
     number: 5,
     date: "21 de Julio",
+    endDate: "20 de Agosto",
   },
   {
     name: "Virgo",
@@ -85,6 +90,7 @@ const zodiacSigns = [
     temperament: "Seco y Frio",
     number: 6,
     date: "21 de Agosto",
+    endDate: "20 de Septiembre",
   },
   {
     name: "Libra",
@@ -99,6 +105,7 @@ const zodiacSigns = [
     temperament: "Humedo y Caliente",
     number: 7,
     date: "21 de Septiembre",
+    endDate: "20 de Octubre",
   },
   {
     name: "Escorpio",
@@ -113,6 +120,7 @@ const zodiacSigns = [
     temperament: "Humedo y Frio",
     number: 8,
     date: "21 de Octubre",
+    endDate: "20 de Noviembre",
   },
   {
     name: "Sagitario",
@@ -122,11 +130,12 @@ const zodiacSigns = [
     animal: "Flecha",
     opposite: "Géminis",
     regent: "Júpiter",
-    body: "Hígado nervio ciático",
+    body: "Hígado",
     glyph: "♐️",
     temperament: "Seco y Caliente",
     number: 9,
     date: "21 de Noviembre",
+    endDate: "20 de Diciembre",
   },
   {
     name: "Capricornio",
@@ -136,11 +145,12 @@ const zodiacSigns = [
     animal: "Cabra",
     opposite: "Cáncer",
     regent: "Saturno",
-    body: "Huesos rodillas y dientes",
+    body: "Huesos y dientes",
     glyph: "♑️",
     temperament: "Seco y Frio",
     number: 10,
     date: "21 de Diciembre",
+    endDate: "20 de Enero",
   },
   {
     name: "Acuario",
@@ -150,11 +160,12 @@ const zodiacSigns = [
     animal: "Aguatero",
     opposite: "Leo",
     regent: "Saturno y Urano",
-    body: "Sistema circulatorio pantorrillas tobillos",
+    body: "Sistema circulatorio",
     glyph: "♒️",
     temperament: "Caliente y Humedo",
     number: 11,
     date: "21 Enero",
+    endDate: "20 de Febrero",
   },
   {
     name: "Piscis",
@@ -169,6 +180,7 @@ const zodiacSigns = [
     temperament: "Humedo y Frio",
     number: 12,
     date: "19 de Febrero",
+    endDate: "20 de Marzo",
   },
 ];
 
@@ -176,13 +188,18 @@ export const questionElement = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
   const options = pickRandomItems(
+    zodiacSigns.filter((sign) => sign.element === randomSign.element),
+  ).map((sign) => sign.name);
+
+  const correctOption = pickRandomItems(
     zodiacSigns.filter((sign) => sign.element !== randomSign.element),
+    1,
   ).map((sign) => sign.name);
 
   return {
     question: `¿Cuál de estos signos no es de ${randomSign.element}?`,
     correctAnswer: randomSign.name,
-    options: shuffleArray([randomSign.name, ...options]),
+    options: shuffleArray([correctOption[0], ...options]),
   };
 };
 export const questionModality = (): Quiz => {
@@ -206,7 +223,7 @@ const questionPolarity = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿Cuál de estos signos tiene la polaridad ${randomSign.polarity}?`,
+    question: `¿Cuál de estos signos tiene polaridad ${randomSign.polarity}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
@@ -224,11 +241,29 @@ const questionAnimal = (): Quiz => {
     options: shuffleArray([randomSign.name, ...options]),
   };
 };
+
+const questionAnimalV2 = (): Quiz => {
+  const randomSign =
+    zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
+  const options = pickRandomItems(
+    zodiacSigns.filter((sign) => sign.animal !== randomSign.animal),
+  ).map((sign) => sign.name);
+
+  return {
+    question: `¿Cuál es el signo del Zodíaco representado por ${randomSign.animal}?`,
+    correctAnswer: randomSign.name,
+    options: shuffleArray([randomSign.name, ...options]),
+  };
+};
+
 const questionOpposite = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
   const options = pickRandomItems(
-    zodiacSigns.filter((sign) => sign.opposite !== randomSign.opposite),
+    zodiacSigns.filter(
+      (sign) =>
+        sign.opposite !== randomSign.opposite && randomSign.name !== sign.name,
+    ),
   ).map((sign) => sign.opposite);
 
   return {
@@ -237,6 +272,7 @@ const questionOpposite = (): Quiz => {
     options: shuffleArray([randomSign.opposite, ...options]),
   };
 };
+
 const questionRegent = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
@@ -245,11 +281,26 @@ const questionRegent = (): Quiz => {
   ).map((sign) => sign.regent);
 
   return {
-    question: `¿Qué planeta o luminaria rige a ${randomSign.name}?`,
+    question: `¿Qué planeta o luminaria rige a ${randomSign.name}?`, // check regent no duplication
     correctAnswer: randomSign.regent,
     options: shuffleArray([randomSign.regent, ...options]),
   };
 };
+
+const questionRegentV2 = (): Quiz => {
+  const randomSign =
+    zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
+  const options = pickRandomItems(
+    zodiacSigns.filter((sign) => sign.regent !== randomSign.regent),
+  ).map((sign) => sign.name);
+
+  return {
+    question: `¿Cuál de estos signos es regido por ${randomSign.regent}?`, // check regent no duplication
+    correctAnswer: randomSign.name,
+    options: shuffleArray([randomSign.name, ...options]),
+  };
+};
+
 const questionBody = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
@@ -261,6 +312,22 @@ const questionBody = (): Quiz => {
     question: `¿Qué parte del cuerpo rige el signo de ${randomSign.name}?`,
     correctAnswer: randomSign.body,
     options: shuffleArray([randomSign.body, ...options]),
+  };
+};
+
+const questionBodyV2 = (): Quiz => {
+  const randomSign =
+    zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
+  const options = pickRandomItems(
+    zodiacSigns.filter(
+      (sign) => sign.body !== randomSign.body && randomSign.name !== sign.name,
+    ),
+  ).map((sign) => sign.name);
+
+  return {
+    question: `¿Cuál es el signo que rige ${randomSign.body}?`,
+    correctAnswer: randomSign.name,
+    options: shuffleArray([randomSign.name, ...options]),
   };
 };
 const questionGlyph = (): Quiz => {
@@ -276,6 +343,7 @@ const questionGlyph = (): Quiz => {
     options: shuffleArray([randomSign.glyph, ...options]),
   };
 };
+
 const questionTemperament = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
@@ -283,14 +351,29 @@ const questionTemperament = (): Quiz => {
     zodiacSigns.filter(
       (sign) => sign.temperament !== randomSign.temperament && sign.name,
     ),
+  ).map((sign) => sign.temperament);
+
+  return {
+    question: `¿Cuál es el temperamento de ${randomSign.name}?`,
+    correctAnswer: randomSign.temperament,
+    options: shuffleArray([randomSign.name, ...options]),
+  };
+};
+
+const questionTemperamentV2 = (): Quiz => {
+  const randomSign =
+    zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
+  const options = pickRandomItems(
+    zodiacSigns.filter((sign) => sign.temperament !== randomSign.temperament),
   ).map((sign) => sign.name);
 
   return {
-    question: `¿A qué signo le corresponde el temperamento '${randomSign.temperament}'?`,
+    question: `¿Qué signo es ${randomSign.temperament}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
 };
+
 const questionNumber = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
@@ -299,11 +382,26 @@ const questionNumber = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿A qué signo le corresponde el numero ${randomSign.number}?`,
+    question: `¿Qué posición ocupa el signo de ${randomSign.name} en el zodíaco?`, // check correct answers
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
 };
+
+const questionNumberV2 = (): Quiz => {
+  const randomSign =
+    zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
+  const options = pickRandomItems(
+    zodiacSigns.filter((sign) => sign.number !== randomSign.number),
+  ).map((sign) => sign.name);
+
+  return {
+    question: `¿Qué signo ocupa la ${randomSign.number}º posición en la rueda zodiacal?`,
+    correctAnswer: randomSign.name,
+    options: shuffleArray([randomSign.name, ...options]),
+  };
+};
+
 const questionStartDate = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
@@ -318,18 +416,53 @@ const questionStartDate = (): Quiz => {
   };
 };
 
+const questionStartDateV2 = (): Quiz => {
+  const randomSign =
+    zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
+  const options = pickRandomItems(
+    zodiacSigns.filter((sign) => sign.date !== randomSign.date),
+  ).map((sign) => sign.date);
+
+  return {
+    question: `¿Cuál es la fecha de comienzo de ${randomSign.name}?`,
+    correctAnswer: randomSign.date,
+    options: shuffleArray([randomSign.date, ...options]),
+  };
+};
+
+const questionEndDate = (): Quiz => {
+  const randomSign =
+    zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
+  const options = pickRandomItems(
+    zodiacSigns.filter((sign) => sign.endDate !== randomSign.endDate),
+  ).map((sign) => sign.endDate);
+
+  return {
+    question: `¿Cuál es la fecha de finalización de ${randomSign.name}?`,
+    correctAnswer: randomSign.endDate,
+    options: shuffleArray([randomSign.endDate, ...options]),
+  };
+};
+
 const combinedQuestions = [
   questionElement,
   questionModality,
   questionPolarity,
   questionAnimal,
+  questionAnimalV2,
   questionOpposite,
   questionRegent,
+  questionRegentV2,
   questionBody,
+  questionBodyV2,
   questionGlyph,
   questionTemperament,
+  questionTemperamentV2,
   questionNumber,
+  questionNumberV2,
   questionStartDate,
+  questionStartDateV2,
+  questionEndDate,
 ];
 
 export function generatePool() {
@@ -346,5 +479,7 @@ export function generatePool() {
     ),
   ];
 
-  return pool.map((item, index) => ({ ...item, id: index.toString() }));
+  return pool
+    .map((item, index) => ({ ...item, id: index.toString() }))
+    .slice(0, 20);
 }

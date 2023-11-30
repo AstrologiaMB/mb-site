@@ -67,8 +67,10 @@ export default function Quiz({
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="mb-[60px] text-center font-serif text-4xl">{question}</h1>
-      <div className="flex w-[300px] flex-col items-center gap-4">
+      <h1 className="mb-8 mt-16 text-center font-serif text-[26px] md:mb-[60px] md:mt-0 md:text-4xl">
+        {question}
+      </h1>
+      <div className="mt-10 flex w-[300px] flex-col items-center gap-4 md:mt-0">
         {options.map((option, index) => (
           <Button
             className="w-full"

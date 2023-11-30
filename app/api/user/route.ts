@@ -13,8 +13,6 @@ export async function POST(request: NextRequest) {
 
   try {
     await connectDB();
-
-    console.log("CONNECTED");
     const userFound = await User.findOne({ email }).select("email");
 
     if (!userFound) {

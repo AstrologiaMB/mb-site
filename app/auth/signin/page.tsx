@@ -92,10 +92,11 @@ export default function SignIn() {
         </label>
         <input
           ref={dateRef}
-          className={`${INPUT_STYLES} uppercase`}
+          className={`${INPUT_STYLES} min-h-[42px] uppercase`}
           type="date"
           id="dateOfBirth"
           name="dateOfBirth"
+          placeholder="DD/MM/AAAA"
           min="1950-01-01"
           max="2018-12-31"
           required

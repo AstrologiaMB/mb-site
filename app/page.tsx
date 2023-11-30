@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <SplashScreen fullScreen background>
       <Image
-        className="mb-3"
+        className="mb-8"
         src="/AstroQuizIso.svg"
         width={790}
         height={157}
@@ -20,7 +20,7 @@ export default async function Home() {
       <h1 className="mb-16 text-center font-mono text-[20px] text-white">
         POR ACADEMIA DE{" "}
         <a
-          className="text-mb-green"
+          className="inline-block text-mb-green"
           href="https://mariablaquier.com/"
           target="_blank"
         >
