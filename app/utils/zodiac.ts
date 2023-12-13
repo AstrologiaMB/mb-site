@@ -167,7 +167,7 @@ const zodiacSigns = [
     body: "Huesos y dientes",
     bodyArticle: "los",
     glyph: "♑️",
-    temperament: "Frío y Seco",
+    temperament: "Frío y seco",
     number: 10,
     date: "21 de Diciembre",
     endDate: "20 de Enero",
