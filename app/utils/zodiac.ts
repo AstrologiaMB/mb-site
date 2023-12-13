@@ -199,7 +199,7 @@ const zodiacSigns = [
     opposite: "Virgo",
     regent: "Júpiter y Neptuno",
     body: "Pies",
-    bodyArticle: "el",
+    bodyArticle: "los",
     glyph: "♓️",
     temperament: "Frío y húmedo",
     number: 12,
@@ -224,6 +224,7 @@ export const questionElement = (): Quiz => {
     1,
   ).map((sign) => sign.name);
 
+  // CATEGORIA FACIL
   return {
     question: `¿Cuál signo no es de ${randomSign.element.toLowerCase()}?`,
     correctAnswer: correctOption[0],
@@ -240,12 +241,14 @@ export const questionModality = (): Quiz => {
 
   const optionSet = Array.from(new Set(options));
 
+  // CATEGORIA FACIL
   return {
     question: `¿Cuál es la cualidad del signo ${randomSign.name}?`,
     correctAnswer: randomSign.modality,
     options: shuffleArray([randomSign.modality, ...optionSet.slice(0, 3)]),
   };
 };
+
 const questionPolarity = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
@@ -253,12 +256,14 @@ const questionPolarity = (): Quiz => {
     zodiacSigns.filter((sign) => sign.polarity !== randomSign.polarity),
   ).map((sign) => sign.name);
 
+  // CATEGORIA DIFICIL
   return {
     question: `¿Cuál de estos signos tiene polaridad ${randomSign.polarity}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
 };
+
 const questionAnimal = (): Quiz => {
   const randomSign =
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
@@ -266,6 +271,7 @@ const questionAnimal = (): Quiz => {
     zodiacSigns.filter((sign) => sign.animal !== randomSign.animal),
   ).map((sign) => sign.name);
 
+  // CATEGORIA FACIL
   return {
     question: `¿Qué signo zodiacal está asociado a ${
       randomSign.animalArticle
@@ -282,8 +288,7 @@ const questionAnimalV2 = (): Quiz => {
     zodiacSigns.filter((sign) => sign.animal !== randomSign.animal),
   ).map((sign) => sign.name);
 
-  const article = randomSign.animal.toLowerCase() == "" ? "un" : "una";
-
+  // CATEGORIA FACIL
   return {
     question: `¿Cuál es el signo del Zodíaco representado por ${
       randomSign.animalArticle
@@ -303,6 +308,7 @@ const questionOpposite = (): Quiz => {
     ),
   ).map((sign) => sign.opposite);
 
+  // CATEGORIA FACIL
   return {
     question: `¿Cuál es el signo opuesto de ${randomSign.name}?`,
     correctAnswer: randomSign.opposite,
@@ -315,12 +321,15 @@ const questionRegent = (): Quiz => {
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
   const options = pickRandomItems(
     zodiacSigns.filter((sign) => sign.regent !== randomSign.regent),
+    11,
   ).map((sign) => sign.regent);
 
+  const optionSet = Array.from(new Set(options));
+  // CATEGORIA FACIL
   return {
     question: `¿Qué planeta o luminaria rige a ${randomSign.name}?`, // check regent no duplication
     correctAnswer: randomSign.regent,
-    options: shuffleArray([randomSign.regent, ...options]),
+    options: shuffleArray([randomSign.regent, ...optionSet.slice(0, 3)]),
   };
 };
 
@@ -331,6 +340,7 @@ const questionRegentV2 = (): Quiz => {
     zodiacSigns.filter((sign) => sign.regent !== randomSign.regent),
   ).map((sign) => sign.name);
 
+  // CATEGORIA FACIL
   return {
     question: `¿Cuál de estos signos es regido por ${randomSign.regent}?`,
     correctAnswer: randomSign.name,
@@ -345,6 +355,7 @@ const questionBody = (): Quiz => {
     zodiacSigns.filter((sign) => sign.body !== randomSign.body),
   ).map((sign) => sign.body);
 
+  // CATEGORIA DIFICIL
   return {
     question: `¿Qué parte del cuerpo rige el signo de ${randomSign.name}?`,
     correctAnswer: randomSign.body,
@@ -361,6 +372,7 @@ const questionBodyV2 = (): Quiz => {
     ),
   ).map((sign) => sign.name);
 
+  // CATEGORIA FACIL
   return {
     question: `¿Cuál es el signo que rige ${
       randomSign.bodyArticle
@@ -377,6 +389,7 @@ const questionGlyph = (): Quiz => {
     zodiacSigns.filter((sign) => sign.glyph !== randomSign.glyph),
   ).map((sign) => sign.glyph);
 
+  // CATEGORIA FACIL
   return {
     question: `¿Cuál de estos glifos representa a ${randomSign.name}?`,
     correctAnswer: randomSign.glyph,
@@ -394,6 +407,7 @@ const questionTemperament = (): Quiz => {
 
   const optionSet = Array.from(new Set(options));
 
+  // CATEGORIA DIFICIL
   return {
     question: `El signo de ${randomSign.name} es:`,
     correctAnswer: randomSign.temperament,
@@ -406,16 +420,20 @@ const questionTemperamentV2 = (): Quiz => {
     zodiacSigns[Math.floor(Math.random() * zodiacSigns.length)];
   const options = pickRandomItems(
     zodiacSigns.filter((sign) => sign.temperament === randomSign.temperament),
+    11,
   ).map((sign) => sign.name);
+
+  const optionSet = Array.from(new Set(options));
 
   const correctOption = pickRandomItems(
     zodiacSigns.filter((sign) => sign.temperament !== randomSign.temperament),
   ).map((sign) => sign.name);
 
+  // CATEGORIA DIFICIL
   return {
     question: `¿Qué signo no es ${randomSign.temperament.toLowerCase()}?`,
     correctAnswer: correctOption[0],
-    options: shuffleArray([correctOption[0], ...options]),
+    options: shuffleArray([correctOption[0], ...optionSet.slice(0, 3)]),
   };
 };
 
@@ -426,6 +444,7 @@ const questionNumber = (): Quiz => {
     zodiacSigns.filter((sign) => sign.number !== randomSign.number),
   ).map((sign) => sign.number.toString());
 
+  // CATEGORIA FACIL
   return {
     question: `¿Qué posición ocupa el signo de ${randomSign.name} en el Zodíaco?`,
     correctAnswer: randomSign.number.toString(),
@@ -440,6 +459,7 @@ const questionNumberV2 = (): Quiz => {
     zodiacSigns.filter((sign) => sign.number !== randomSign.number),
   ).map((sign) => sign.name);
 
+  // CATEGORIA DIFICIL
   return {
     question: `¿Qué signo ocupa la ${randomSign.number}º posición en la rueda zodiacal?`,
     correctAnswer: randomSign.name,
@@ -454,6 +474,7 @@ const questionStartDate = (): Quiz => {
     zodiacSigns.filter((sign) => sign.date !== randomSign.date),
   ).map((sign) => sign.date);
 
+  // CATEGORIA FACIL
   return {
     question: `¿Qué día comienza el signo de ${randomSign.name}?`,
     correctAnswer: randomSign.date,
@@ -468,6 +489,7 @@ const questionStartDateV2 = (): Quiz => {
     zodiacSigns.filter((sign) => sign.date !== randomSign.date),
   ).map((sign) => sign.date);
 
+  // CATEGORIA DIFICIL
   return {
     question: `¿Cuál es la fecha de comienzo de ${randomSign.name}?`,
     correctAnswer: randomSign.date,
@@ -482,6 +504,7 @@ const questionEndDate = (): Quiz => {
     zodiacSigns.filter((sign) => sign.endDate !== randomSign.endDate),
   ).map((sign) => sign.endDate);
 
+  // CATEGORIA DIFICIL
   return {
     question: `¿Cuál es la fecha de finalización de ${randomSign.name}?`,
     correctAnswer: randomSign.endDate,
@@ -490,25 +513,47 @@ const questionEndDate = (): Quiz => {
 };
 
 const combinedQuestions = [
-  questionElement,
-  questionTemperamentV2,
-  questionModality,
-  questionPolarity,
-  questionAnimal,
-  questionAnimalV2,
-  questionOpposite,
-  questionRegent,
-  //questionRegentV2,
-  questionBody,
-  questionBodyV2,
-  questionGlyph,
-  questionTemperament,
-  questionTemperamentV2,
-  questionNumber,
-  questionNumberV2,
-  questionStartDate,
-  questionStartDateV2,
-  questionEndDate,
+  questionElement, // CATEGORIA FACIL
+  questionModality, // CATEGORIA FACIL
+  questionPolarity, // CATEGORIA DIFICIL
+  questionAnimal, // CATEGORIA FACIL
+  questionAnimalV2, // CATEGORIA FACIL
+  questionOpposite, // CATEGORIA FACIL
+  questionRegent, // CATEGORIA FACIL
+  //questionRegentV2, // CATEGORIA FACIL
+  questionBody, // CATEGORIA DIFICIL
+  questionBodyV2, // CATEGORIA FACIL
+  questionGlyph, // CATEGORIA FACIL
+  questionTemperament, // CATEGORIA DIFICIL
+  questionTemperamentV2, // CATEGORIA DIFICIL
+  questionNumber, // CATEGORIA FACIL
+  questionNumberV2, // CATEGORIA DIFICIL
+  questionStartDate, // CATEGORIA FACIL
+  questionStartDateV2, // CATEGORIA DIFICIL
+  //questionEndDate,
+];
+
+const easyQuestions = [
+  questionElement, // CATEGORIA FACIL
+  questionModality, // CATEGORIA FACIL
+  questionAnimal, // CATEGORIA FACIL
+  questionAnimalV2, // CATEGORIA FACIL
+  questionOpposite, // CATEGORIA FACIL
+  questionRegent, // CATEGORIA FACIL
+  //questionRegentV2, // CATEGORIA FACIL
+  questionBodyV2, // CATEGORIA FACIL
+  questionGlyph, // CATEGORIA FACIL
+  questionNumber, // CATEGORIA FACIL
+  questionStartDate, // CATEGORIA FACIL
+];
+
+const hardQuestions = [
+  questionPolarity, // CATEGORIA DIFICIL
+  questionBody, // CATEGORIA DIFICIL
+  questionTemperament, // CATEGORIA DIFICIL
+  questionTemperamentV2, // CATEGORIA DIFICIL
+  questionNumberV2, // CATEGORIA DIFICIL
+  questionStartDateV2, // CATEGORIA DIFICIL
 ];
 
 // const combinedQuestions = [questionElement, questionTemperamentV2];
@@ -516,7 +561,12 @@ const combinedQuestions = [
 export function generatePool() {
   const pool = [
     ...shuffleArray(
-      combinedQuestions.map((question) => {
+      easyQuestions.map((question) => {
+        return question();
+      }),
+    ),
+    ...shuffleArray(
+      hardQuestions.map((question) => {
         return question();
       }),
     ),

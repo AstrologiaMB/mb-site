@@ -6,7 +6,7 @@ import BestScores from "../components/best-scores";
 import Modal from "@/app/components/modal";
 import { useState } from "react";
 
-const STYLE_SHARE = "font-sans flex items-center flex-col gap-1";
+const STYLE_SHARE = "font-sans flex items-center flex-col gap-1 w-[80px]";
 
 function LeaderBoard() {
   const [modalOpen, setmodalOpen] = useState(false);
@@ -58,7 +58,7 @@ function LeaderBoard() {
         <div className="flex justify-center gap-4">
           <a
             className={STYLE_SHARE}
-            href="https://web.whatsapp.com/send?text=Prob%C3%A1%20AstroQuiz%20%F0%9F%AA%90%0Ahttps%3A%2F%2Fmb-site.vercel.app"
+            href="https://web.whatsapp.com/send?text=%C2%BFCu%C3%A1nto%20sabes%20de%20Astrolog%C3%ADa%3F%20%F0%9F%AA%90%0ADesc%C3%BAbrelo%20jugando%20a%20Astroquiz.%20%F0%9F%92%AB%0Ahttps%3A%2F%2Fmb-site.vercel.app"
             target="_blank"
           >
             <svg
@@ -78,6 +78,28 @@ function LeaderBoard() {
               ></path>
             </svg>
             <span>WhatsApp</span>
+          </a>
+          <a
+            className={STYLE_SHARE}
+            href="http://twitter.com/share?text=Proba AstroQuiz&url=https%3A%2F%2Fmb-site.vercel.app&hashtags=hashtag1,hashtag2,hashtag3
+"
+            target="_blank"
+          >
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 56 56"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              display="block"
+            >
+              <rect width="56" height="56" rx="28" fill="#111111"></rect>
+              <path
+                d="M30.3055 25.8561L40.505 14H38.088L29.2318 24.2945L22.1584 14H14L24.6964 29.5671L14 42H16.4171L25.7695 31.1287L33.2396 42H41.3979L30.3049 25.8561H30.3055ZM26.995 29.7042L25.9112 28.1541L17.288 15.8196H21.0005L27.9595 25.7739L29.0433 27.324L38.0892 40.2632H34.3767L26.995 29.7048V29.7042Z"
+                fill="white"
+              ></path>
+            </svg>
+            <span>X</span>
           </a>
           <a
             className={STYLE_SHARE}
@@ -103,32 +125,10 @@ function LeaderBoard() {
             </svg>
             <span>Facebook</span>
           </a>
-          <a
-            className={STYLE_SHARE}
-            href="http://twitter.com/share?text=Proba AstroQuiz&url=https%3A%2F%2Fmb-site.vercel.app&hashtags=hashtag1,hashtag2,hashtag3
-"
-            target="_blank"
-          >
-            <svg
-              width="48"
-              height="48"
-              viewBox="0 0 56 56"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              display="block"
-            >
-              <rect width="56" height="56" rx="28" fill="#111111"></rect>
-              <path
-                d="M30.3055 25.8561L40.505 14H38.088L29.2318 24.2945L22.1584 14H14L24.6964 29.5671L14 42H16.4171L25.7695 31.1287L33.2396 42H41.3979L30.3049 25.8561H30.3055ZM26.995 29.7042L25.9112 28.1541L17.288 15.8196H21.0005L27.9595 25.7739L29.0433 27.324L38.0892 40.2632H34.3767L26.995 29.7048V29.7042Z"
-                fill="white"
-              ></path>
-            </svg>
-            <span>X</span>
-          </a>
         </div>
         <hr className="mb-4 mt-8" />
         <a
-          className="block text-center font-mono"
+          className="block text-center font-sans font-semibold"
           href="#"
           onClick={(event) => {
             event.preventDefault();
