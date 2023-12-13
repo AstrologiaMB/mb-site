@@ -466,7 +466,7 @@ const combinedQuestions = [
   questionAnimalV2,
   questionOpposite,
   questionRegent,
-  questionRegentV2,
+  //questionRegentV2,
   questionBody,
   questionBodyV2,
   questionGlyph,
