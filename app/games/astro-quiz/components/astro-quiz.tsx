@@ -187,7 +187,7 @@ export default function AstroQuiz({ userName }: Props) {
         </span>
         <div className="flex gap-[6px] text-right font-mono text-xl md:text-2xl">
           {questionsPool && <span>#️⃣</span>}
-          <span>{questionsPool ? `${20 - questionsPool.length}/20` : ""}</span>
+          <span>{questionsPool ? `${10 - questionsPool.length}/10` : ""}</span>
           <span>|</span>
           <Dashboard key={clockKey}>
             <span>Puntos:{points}</span>
