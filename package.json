@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.1",
+    "@aws-sdk/client-ses": "^3.468.0",
+    "@aws-sdk/credential-provider-node": "^3.468.0",
     "@headlessui/react": "^1.7.17",
     "@types/node": "20.5.1",
     "@types/react": "18.2.20",

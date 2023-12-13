@@ -42,7 +42,7 @@ const zodiacSigns = [
     regent: "Mercurio",
     body: "Manos y brazos",
     glyph: "♊️",
-    temperament: "Humedo y caliente",
+    temperament: "Caliente y húmedo",
     number: 3,
     date: "21 de Mayo",
     endDate: "20 de Junio",
@@ -57,7 +57,7 @@ const zodiacSigns = [
     regent: "Luna",
     body: "Pecho",
     glyph: "♋️",
-    temperament: "Humedo y frío",
+    temperament: "Frío y húmedo",
     number: 4,
     date: "21 de Junio",
     endDate: "20 de Julio",
@@ -72,7 +72,7 @@ const zodiacSigns = [
     regent: "Sol",
     body: "Corazón",
     glyph: "♌️",
-    temperament: "Seco y caliente",
+    temperament: "Caliente y seco",
     number: 5,
     date: "21 de Julio",
     endDate: "20 de Agosto",
@@ -87,7 +87,7 @@ const zodiacSigns = [
     regent: "Mercurio",
     body: "Intestino delgado",
     glyph: "♍️",
-    temperament: "Seco y frío",
+    temperament: "Frío y seco",
     number: 6,
     date: "21 de Agosto",
     endDate: "20 de Septiembre",
@@ -102,7 +102,7 @@ const zodiacSigns = [
     regent: "Venus",
     body: "Riñones",
     glyph: "♎️",
-    temperament: "Humedo y caliente",
+    temperament: "Caliente y húmedo",
     number: 7,
     date: "21 de Septiembre",
     endDate: "20 de Octubre",
@@ -117,7 +117,7 @@ const zodiacSigns = [
     regent: "Marte y Plutón",
     body: "Sistema excretor",
     glyph: "♏️",
-    temperament: "Humedo y frío",
+    temperament: "Frío y húmedo",
     number: 8,
     date: "21 de Octubre",
     endDate: "20 de Noviembre",
@@ -132,7 +132,7 @@ const zodiacSigns = [
     regent: "Júpiter",
     body: "Hígado",
     glyph: "♐️",
-    temperament: "Seco y caliente",
+    temperament: "Caliente y seco",
     number: 9,
     date: "21 de Noviembre",
     endDate: "20 de Diciembre",
@@ -147,7 +147,7 @@ const zodiacSigns = [
     regent: "Saturno",
     body: "Huesos y dientes",
     glyph: "♑️",
-    temperament: "Seco y frío",
+    temperament: "Frío y Seco",
     number: 10,
     date: "21 de Diciembre",
     endDate: "20 de Enero",
@@ -162,7 +162,7 @@ const zodiacSigns = [
     regent: "Saturno y Urano",
     body: "Sistema circulatorio",
     glyph: "♒️",
-    temperament: "Caliente y humedo",
+    temperament: "Caliente y húmedo",
     number: 11,
     date: "21 Enero",
     endDate: "20 de Febrero",
@@ -177,7 +177,7 @@ const zodiacSigns = [
     regent: "Júpiter y Neptuno",
     body: "Pies",
     glyph: "♓️",
-    temperament: "Humedo y frío",
+    temperament: "Frío y húmedo",
     number: 12,
     date: "19 de Febrero",
     endDate: "20 de Marzo",
@@ -269,7 +269,7 @@ const questionOpposite = (): Quiz => {
   const options = pickRandomItems(
     zodiacSigns.filter(
       (sign) =>
-        sign.opposite !== randomSign.opposite && randomSign.name !== sign.name,
+        sign.name !== randomSign.name && sign.name !== randomSign.opposite,
     ),
   ).map((sign) => sign.opposite);
 
@@ -377,11 +377,7 @@ const questionTemperamentV2 = (): Quiz => {
   ).map((sign) => sign.name);
 
   const correctOption = pickRandomItems(
-    zodiacSigns.filter(
-      (sign) =>
-        sign.temperament !== randomSign.temperament &&
-        !options.includes(sign.name),
-    ),
+    zodiacSigns.filter((sign) => sign.temperament !== randomSign.temperament),
   ).map((sign) => sign.name);
 
   return {
@@ -400,7 +396,7 @@ const questionNumber = (): Quiz => {
 
   return {
     question: `¿Qué posición ocupa el signo de ${randomSign.name} en el Zodíaco?`,
-    correctAnswer: randomSign.name,
+    correctAnswer: randomSign.number.toString(),
     options: shuffleArray([randomSign.number.toString(), ...options]),
   };
 };
@@ -492,14 +488,9 @@ export function generatePool() {
         return question();
       }),
     ),
-    ...shuffleArray(
-      combinedQuestions.map((question) => {
-        return question();
-      }),
-    ),
   ];
 
   return pool
     .map((item, index) => ({ ...item, id: index.toString() }))
-    .slice(0, 20);
+    .slice(0, 10);
 }

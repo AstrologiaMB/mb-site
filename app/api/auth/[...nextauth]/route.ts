@@ -4,9 +4,20 @@ import type { NextAuthOptions } from "next-auth";
 import EmailProvider, { EmailConfig } from "next-auth/providers/email";
 import { createTransport } from "nodemailer";
 import clientPromise from "@/lib/mongodb";
+import aws, { SES, SendRawEmailCommand } from "@aws-sdk/client-ses";
+import { defaultProvider } from "@aws-sdk/credential-provider-node";
 import { MongoDBAdapter } from "./adapter";
 import connectDB from "@/lib/mongooseConnector";
 import User from "@/lib/models/user";
+
+const ses = new SES({
+  apiVersion: "2010-12-01",
+  region: "us-east-1",
+  credentials: {
+    accessKeyId: "AKIAYLCGH7XX6DKQLVWK",
+    secretAccessKey: "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",
+  },
+});
 
 export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
@@ -68,9 +79,13 @@ async function CustomSendVerificationRequest(params: {
 
   try {
     const transport = createTransport(provider.server);
+
+    /* const transport = createTransport({
+      SES: { ses, aws: { SendRawEmailCommand } },
+    }); */
     const result = await transport.sendMail({
-      to: identifier,
-      from: provider.from,
+      to: "lucio.poveda@gmail.com" || identifier,
+      from: "cursos@mariablaquier.com" || provider.from,
       subject: `Ingresar a AstroQuiz`,
       text: text({ url, host }),
       html: html({ url, host }),
