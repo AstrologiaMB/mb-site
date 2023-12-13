@@ -267,7 +267,9 @@ const questionAnimal = (): Quiz => {
   ).map((sign) => sign.name);
 
   return {
-    question: `¿Qué signo zodiacal está asociado a un/a ${randomSign.animal.toLowerCase()}?`,
+    question: `¿Qué signo zodiacal está asociado a ${
+      randomSign.animalArticle
+    } ${randomSign.animal.toLowerCase()}?`,
     correctAnswer: randomSign.name,
     options: shuffleArray([randomSign.name, ...options]),
   };
