@@ -8,6 +8,7 @@ import { MDB_UpdateUserGame } from "@/app/users/action";
 import { generatePool } from "@/app/utils/zodiac";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import { PuffLoader } from "react-spinners";
 
 type Props = {
   userName: string;
@@ -228,6 +229,7 @@ export default function AstroQuiz({ userName }: Props) {
           </div>
         </div>
       )}
+      {!currentQuestion && <PuffLoader color="#9C7DDF" />}
       <div></div>
     </div>
   );

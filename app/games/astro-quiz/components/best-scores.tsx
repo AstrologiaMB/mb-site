@@ -4,6 +4,7 @@ import { MDB_GetLeaderboard, getLeaderBoard } from "@/app/users/action";
 import { useEffect, useState, useTransition } from "react";
 import { HTMLAttributes } from "react";
 import { signOut, useSession } from "next-auth/react";
+import { PuffLoader } from "react-spinners";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
@@ -34,6 +35,7 @@ function BestScores({ ...props }: Props) {
 
   return (
     <div className={`mb-8 w-full text-left font-mono`} {...props}>
+      {!leaderBoard && <PuffLoader className="mx-auto" color="#9C7DDF" />}
       {leaderBoard &&
         leaderBoard.map((leader, index) => {
           if (leader.scores) {
