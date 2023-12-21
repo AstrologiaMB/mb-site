@@ -78,14 +78,14 @@ async function CustomSendVerificationRequest(params: {
   const { host } = new URL(url);
 
   try {
-    const transport = createTransport(provider.server);
+    // const transport = createTransport(provider.server);
 
-    /* const transport = createTransport({
+    const transport = createTransport({
       SES: { ses, aws: { SendRawEmailCommand } },
-    }); */
+    });
     const result = await transport.sendMail({
-      to: "lucio.poveda@gmail.com" || identifier,
-      from: "cursos@mariablaquier.com" || provider.from,
+      to: identifier,
+      from: "cursos@mariablaquier.com",
       subject: `Ingresar a AstroQuiz`,
       text: text({ url, host }),
       html: html({ url, host }),
