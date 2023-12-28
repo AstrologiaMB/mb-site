@@ -34,11 +34,11 @@ export default function AstroQuiz({ userName }: Props) {
   const BASE_POINTS = 10;
   const EXTRA_POINTS = 6;
 
-  const finishGame = () => {
+  const finishGame = (currentPoints?: number) => {
     startTransition(async () => {
       try {
         if (session?.user?.email) {
-          await MDB_UpdateUserGame(session?.user?.email, points);
+          await MDB_UpdateUserGame(session?.user?.email, currentPoints || 0);
           router.push("/games/astro-quiz/leaderboard");
         }
       } catch {
@@ -51,24 +51,24 @@ export default function AstroQuiz({ userName }: Props) {
    * Assign the first element from the question pool to the current Quiz question
    * Shift he first element of the curren pool
    */
-  const updatePool = () => {
+  const updatePool = (currentPoints?: number) => {
     setQuestionStartedAt(new Date());
     if (questionsPool && questionsPool.length > 0) {
       setCurrentQuestion(() => questionsPool[0]);
+
+      setQuestionsPool(() => {
+        if (questionsPool) {
+          return questionsPool.slice(1);
+        }
+
+        return null;
+      });
+
+      setClockKey(Math.random());
     } else {
       setCurrentQuestion(null);
-      finishGame();
+      finishGame(currentPoints);
     }
-
-    setQuestionsPool(() => {
-      if (questionsPool) {
-        return questionsPool.slice(1);
-      }
-
-      return null;
-    });
-
-    setClockKey(Math.random());
   };
 
   const onQuizfail = () => {
@@ -86,13 +86,19 @@ export default function AstroQuiz({ userName }: Props) {
       30,
       (currentDate - questionStartedAt.valueOf()) / 1000,
     );
+
     const calculatedPoints =
       BASE_POINTS + (EXTRA_POINTS - Math.floor(elapsedTime / 5));
-    setPoints((prev) => prev + calculatedPoints);
 
-    setTimeout(() => {
-      updatePool();
-    }, 1500);
+    setPoints((prev) => {
+      const updatedPoints = prev + calculatedPoints;
+
+      setTimeout(() => {
+        updatePool(updatedPoints);
+      }, 1500);
+
+      return updatedPoints;
+    });
   };
 
   const skipQuestion = () => {
