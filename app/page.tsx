@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Image from "next/image";
 import Button from "./components/atoms/button";
+import ClientFont from "./components/atoms/client-font";
 // /games/astro-quiz
 // /auth/signin
 export default async function Home() {
@@ -10,6 +11,7 @@ export default async function Home() {
 
   return (
     <SplashScreen fullScreen background>
+      <ClientFont />
       <Image
         className="mb-8"
         src="/AstroQuizIso.svg"

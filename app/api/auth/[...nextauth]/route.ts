@@ -20,7 +20,9 @@ const ses = new SES({
 });
 
 export const authOptions: NextAuthOptions = {
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: MongoDBAdapter(clientPromise, {
+    databaseName: process.env.MONGODB_DBNAME,
+  }),
   providers: [
     EmailProvider({
       server: {

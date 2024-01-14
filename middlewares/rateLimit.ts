@@ -5,8 +5,8 @@ import { NextFetchEvent, NextMiddleware, NextResponse } from "next/server";
 
 const ratelimit = new Ratelimit({
   redis: kv,
-  // 5 requests from the same IP in 10 seconds
-  limiter: Ratelimit.slidingWindow(5, "10 s"),
+  // 10 requests from the same IP in 10 seconds
+  limiter: Ratelimit.slidingWindow(10, "10 s"),
 });
 
 export default function withRateLimitMiddleware(middleware: NextMiddleware) {

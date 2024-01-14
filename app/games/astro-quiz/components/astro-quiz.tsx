@@ -7,7 +7,7 @@ import Dashboard from "./dashbaord";
 import { MDB_UpdateUserGame } from "@/app/users/action";
 import { generatePool } from "@/app/utils/zodiac";
 import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { PuffLoader } from "react-spinners";
 
 type Props = {
@@ -23,13 +23,14 @@ type Props = {
 
 export default function AstroQuiz({ userName }: Props) {
   const [points, setPoints] = useState(0);
+  const [gameFinish, setGameFinish] = useState(false);
   const [questionStartedAt, setQuestionStartedAt] = useState(new Date());
   const [clockKey, setClockKey] = useState(Math.random());
   const [questionsPool, setQuestionsPool] = useState<Quiz[] | null>(null);
   const [currentQuestion, setCurrentQuestion] = useState<Quiz | null>(null);
   const router = useRouter();
-  const [pending, startTransition] = useTransition();
-  const { data: session, status } = useSession();
+  const [, startTransition] = useTransition();
+  const { data: session } = useSession();
 
   const BASE_POINTS = 10;
   const EXTRA_POINTS = 6;
@@ -51,7 +52,7 @@ export default function AstroQuiz({ userName }: Props) {
    * Assign the first element from the question pool to the current Quiz question
    * Shift he first element of the curren pool
    */
-  const updatePool = (currentPoints?: number) => {
+  const updatePool = () => {
     setQuestionStartedAt(new Date());
     if (questionsPool && questionsPool.length > 0) {
       setCurrentQuestion(() => questionsPool[0]);
@@ -67,7 +68,7 @@ export default function AstroQuiz({ userName }: Props) {
       setClockKey(Math.random());
     } else {
       setCurrentQuestion(null);
-      finishGame(currentPoints);
+      setGameFinish(true);
     }
   };
 
@@ -94,7 +95,7 @@ export default function AstroQuiz({ userName }: Props) {
       const updatedPoints = prev + calculatedPoints;
 
       setTimeout(() => {
-        updatePool(updatedPoints);
+        updatePool();
       }, 1500);
 
       return updatedPoints;
@@ -139,56 +140,18 @@ export default function AstroQuiz({ userName }: Props) {
 
   useEffect(() => {
     setGame();
-
-    (function (d) {
-      var config = {
-          kitId: "zub8uxw",
-          scriptTimeout: 3000,
-          async: true,
-        },
-        h = d.documentElement,
-        t = setTimeout(function () {
-          h.className =
-            h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive";
-        }, config.scriptTimeout),
-        tk = d.createElement("script"),
-        f = false,
-        s = d.getElementsByTagName("script")[0],
-        a;
-      h.className += " wf-loading";
-      tk.src = "https://use.typekit.net/" + config.kitId + ".js";
-      tk.async = true;
-      // @ts-ignore
-      tk.onload = tk.onreadystatechange = function () {
-        // @ts-ignore
-        a = this.readyState;
-        if (f || (a && a != "complete" && a != "loaded")) return;
-        f = true;
-        clearTimeout(t);
-        try {
-          // @ts-ignore
-          Typekit.load(config);
-        } catch (e) {}
-      };
-      // @ts-ignore
-      s.parentNode.insertBefore(tk, s);
-    })(document);
   }, []);
+
+  useEffect(() => {
+    console.log(gameFinish, points);
+    if (gameFinish) {
+      finishGame(points);
+    }
+  }, [gameFinish, points]);
 
   return (
     <div className="flex w-full grow flex-col items-center md:justify-between">
       <header className="mt-10 flex w-full flex-col items-center md:mt-16 md:flex-row md:justify-between">
-        {/*
-        <button
-          onClick={() =>
-            signOut({ redirect: false }).then(() => {
-              router.push("/");
-            })
-          }
-        >
-          Logout
-        </button>
-         */}
         <span className="text-left font-mono text-xl md:text-2xl">
           {userName}
         </span>

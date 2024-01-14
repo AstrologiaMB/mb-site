@@ -13,13 +13,15 @@ function LeaderBoard() {
   const [modalOpen, setmodalOpen] = useState(false);
   return (
     <div className="flex max-w-[401px] flex-col items-start">
-      <h1 className="mb-[40px] font-mono text-[24px]">¡Felicitaciones!</h1>
+      <h1 className="mb-[40px] mt-8 font-mono text-[24px] md:mt-auto">
+        ¡Felicitaciones!
+      </h1>
       <p className="mb-[50px]">
         Ya sabes un poco mas de astrología. Sigue jugando y aprendiendo con
         nosotros y tus amigos.
       </p>
       <BestScores />
-      <div className="mt-20 flex w-full items-center justify-between">
+      <div className="mb-10 mt-8 flex w-full items-center justify-between md:mb-auto md:mt-20">
         <Link
           href="/games/astro-quiz"
           className="flex items-center self-start font-semibold text-mb-green"

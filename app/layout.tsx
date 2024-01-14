@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, DM_Mono } from "next/font/google";
 import NextAuthProvider from "./context/next-auth-provider";
-import Script from "next/script";
 
 const inter = Inter({
   weight: ["400", "600"],

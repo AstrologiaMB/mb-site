@@ -14,7 +14,7 @@ const conn = {
 async function connectDB() {
   if (conn.isConnected || !MONGODB_URI) return;
 
-  const db = await connect(MONGODB_URI);
+  const db = await connect(MONGODB_URI, { dbName: process.env.MONGODB_DBNAME });
   conn.isConnected = !!db.connections[0].readyState;
 }
 export default connectDB;

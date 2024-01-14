@@ -38,7 +38,10 @@ function BestScores({ ...props }: Props) {
       {!leaderBoard && <PuffLoader className="mx-auto" color="#9C7DDF" />}
       {leaderBoard &&
         leaderBoard.map((leader, index) => {
-          if (leader.scores) {
+          if (
+            leader.scores &&
+            (index < 10 || leader.name === session?.user.name)
+          ) {
             return (
               <div
                 key={index}
@@ -47,8 +50,11 @@ function BestScores({ ...props }: Props) {
                 }`}
               >
                 <p>
-                  {session?.user.name === leader.name ? "⭐️ " : ""}
-                  {leader.name}
+                  <span className="mr-3">{index + 1}</span>
+                  <span>
+                    {session?.user.name === leader.name ? "⭐️ " : ""}
+                    {leader.name}
+                  </span>
                 </p>
                 <span>Puntos:{leader.scores.points.toString()}</span>
               </div>
