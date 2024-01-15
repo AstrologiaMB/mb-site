@@ -11,7 +11,6 @@ export default async function Home() {
 
   return (
     <SplashScreen fullScreen background>
-      <ClientFont />
       <Image
         className="mb-8"
         src="/AstroQuizIso.svg"

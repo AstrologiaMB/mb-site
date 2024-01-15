@@ -143,7 +143,6 @@ export default function AstroQuiz({ userName }: Props) {
   }, []);
 
   useEffect(() => {
-    console.log(gameFinish, points);
     if (gameFinish) {
       finishGame(points);
     }
