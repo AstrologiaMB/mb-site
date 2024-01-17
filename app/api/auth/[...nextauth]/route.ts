@@ -53,10 +53,11 @@ export const authOptions: NextAuthOptions = {
         await connectDB();
         const userFound = await User.findOne({ email: token.email });
         session.user.dateOfBirth = userFound.dateOfBirth;
-        return session;
       } catch (error) {
-        return session;
+        console.error(error);
       }
+
+      return session;
     },
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs

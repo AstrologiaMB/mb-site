@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import BestScores from "../components/best-scores";
 import Modal from "@/app/components/modal";
 import { useState } from "react";
-import { PuffLoader } from "react-spinners";
 
 const STYLE_SHARE = "font-sans flex items-center flex-col gap-1 w-[80px]";
 
