@@ -1,3 +1,5 @@
+// Original code (commented out for reference)
+/*
 import { ipAddress, next } from "@vercel/edge";
 import { Ratelimit } from "@upstash/ratelimit";
 import { kv } from "@vercel/kv";
@@ -38,3 +40,46 @@ export default withAuth(withRateLimit, {
     },
   },
 });
+*/
+
+// Simplified middleware that doesn't depend on Vercel KV
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+
+// Simplify the matcher to protect only necessary routes
+export const config = {
+  matcher: ["/games/astro-quiz", "/users/dashboard"],
+};
+
+// Simplified middleware that only handles authentication
+export default withAuth(
+  // Function that runs for each request
+  function middleware(req) {
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      authorized: ({ req, token }) => {
+        const pathname = req.nextUrl.pathname;
+        
+        // Always allow access to static files and favicon
+        if (pathname.startsWith("/_next") || pathname === "/favicon.ico") {
+          return true;
+        }
+        
+        // Allow access to the home page
+        if (pathname === "/") {
+          return true;
+        }
+        
+        // Allow access to auth pages
+        if (pathname.startsWith("/auth/")) {
+          return true;
+        }
+        
+        // For all other routes, check if the user is authenticated
+        return !!token;
+      },
+    },
+  }
+);
