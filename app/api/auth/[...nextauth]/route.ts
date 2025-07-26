@@ -14,8 +14,8 @@ const ses = new SES({
   apiVersion: "2010-12-01",
   region: "us-east-1",
   credentials: {
-    accessKeyId: "AKIAYLCGH7XX6DKQLVWK",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
 
