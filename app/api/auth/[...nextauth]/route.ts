@@ -82,6 +82,12 @@ async function CustomSendVerificationRequest(params: {
 
   try {
     // const transport = createTransport(provider.server);
+
+    // codigo temporal debugging:
+    console.log("=== DEBUG EMAIL ===");
+    console.log("AWS_ACCESS_KEY_ID:", process.env.AWS_ACCESS_KEY_ID);
+    console.log("AWS_SECRET exists:", !!process.env.AWS_SECRET_ACCESS_KEY);
+    console.log("==================");
   
     const transport = createTransport({
       SES: { ses, aws: { SendRawEmailCommand } },
