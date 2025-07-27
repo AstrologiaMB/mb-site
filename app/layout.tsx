@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Inter, DM_Mono } from "next/font/google";
 import NextAuthProvider from "./context/next-auth-provider";
 import ClientFont from "./components/atoms/client-font";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({
   weight: ["400", "600"],
