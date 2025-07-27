@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, DM_Mono } from "next/font/google";
 import NextAuthProvider from "./context/next-auth-provider";
 import ClientFont from "./components/atoms/client-font";
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({
   weight: ["400", "600"],
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className={`bg-mb-light-gray ${inter.variable} ${dmMono.variable}`}>
         <ClientFont />
         <NextAuthProvider>{children}</NextAuthProvider>
+        <Analytics />
       </body>
     </html>
   );
